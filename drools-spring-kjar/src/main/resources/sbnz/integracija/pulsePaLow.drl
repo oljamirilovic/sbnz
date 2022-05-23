@@ -1,0 +1,14 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.enums.PhysicalActivity;
+
+
+rule "Pulse Limit - SEDENTARY Physical Activity"
+    when
+        $i: Patient( physicalActivity == PhysicalActivity.SEDENTARY, bottomPulse == 0, upperPulse == 0 )
+    then
+        $i.setBottomPulse((((220 - $i.getAge()) - 70) * 50) + 70);
+        $i.setUpperPulse((((220 - $i.getAge()) - 70) * 63) + 70);
+        update($i);
+end
