@@ -6,7 +6,7 @@ import sbnz.integracija.example.model.enums.PhysicalActivity;
 
 rule "Pulse Limit - MODERATE Physical Activity"
     when
-        $i: Patient( physicalActivity == PhysicalActivity.MODERATE, bottomPulse == 0, upperPulse == 0 )
+        $i: Patient( physicalActivity == PhysicalActivity.MODERATE )
     then
         $i.setBottomPulse((((220 - $i.getAge()) - 70) * 64) + 70);
         $i.setUpperPulse((((220 - $i.getAge()) - 70) * 77) + 70);
