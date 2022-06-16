@@ -1,0 +1,63 @@
+package sbnz.integracija;
+
+import java.lang.Math;
+import java.time.LocalDate;
+
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Appointment;
+import sbnz.integracija.example.model.Diagnosis;
+import sbnz.integracija.example.model.Report;
+import sbnz.integracija.example.model.enums.Symptom;
+import sbnz.integracija.example.model.utils.DateUtil;
+
+global List<Patient> patientReport;
+
+rule "Potential inactivity"
+	agenda-group "activity-report"
+	when
+		$r: Report(active == true)
+		accumulate(
+			Patient($p: this, $medicalHistory: medicalHistory, medicalHistory!=null) and
+			Number(intValue > 0) from accumulate{
+		        Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $medicalHistory and
+	         	Number(intValue > 0) from accumulate(
+	         		Therapy($t:this, endDate == null, $daysActive: DateUtil.getDaysElapsed(startDate), $daysActive > 2,
+	         		 Math.ceil($daysActive / 2) > recordedSessions.size()) from $therapies,
+	         		count($t)
+	         	),
+		        count($d)
+	        }
+	        $potentialInactivity : collectList($p)
+        )
+		eval($potentialInactivity.size() > 0)
+	then
+		modify ($r) { setActive(false); }
+		patientReport.addAll($potentialInactivity);
+		System.out.println("Created report for patients with potential inactivity");
+end
+
+rule "Potential abuse"
+	agenda-group "abuse-report"
+	when
+		$r: Report(active == true)
+		accumulate(
+			Patient($p: this, $medicalHistory: medicalHistory, medicalHistory!=null) and
+			Number(intValue > 6) from accumulate{
+		        Diagnosis($d: this, $appointmentId: appointment.id) from $medicalHistory and
+		        Appointment(id == $appointmentId, $symptomsReported: currentSymptoms, $symptomsReported != null,
+		         $injuryDate.isAfter(LocalDate.now().minusMonths(6))) and
+	         	Number(intValue > 0) from accumulate(
+	         		Symptom($s:this, $s == Symptom.BONE_FRACTURE) from $symptomsReported,
+	         		count($t)
+	         	),
+		        count($d)
+	        },
+	        $potentialAbuse: collectList($p)
+	    )
+	    eval($potentialAbuse.size() > 0)
+	then
+		modify ($r) { setActive(false); }
+		patientReport.addAll($potentialAbuse);
+		System.out.println("Created report for potentially abused patients");
+end 
+

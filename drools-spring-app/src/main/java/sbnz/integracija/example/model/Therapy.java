@@ -4,20 +4,44 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sbnz.integracija.example.model.enums.Frequency;
-import sbnz.integracija.example.model.enums.TherapyType;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "therapy")
 public class Therapy {
-    private int id;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "minutes")
     private int minutes;
+
+	@Column(name = "therapyType", nullable = false)
+	@Enumerated(EnumType.STRING)
     private TherapyType therapyType;
-    private Frequency frequency;
+
+	@Column(name = "startDate")
     private LocalDate startDate;
+
+	@Column(name = "endDate")
     private LocalDate endDate;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "diagnosis_id", referencedColumnName = "id")
+    private Diagnosis diagnosis;
+
+    public Therapy(TherapyType type, int mins) {
+    	this.startDate = LocalDate.now();
+    	this.minutes = mins;
+    	this.therapyType = type;
+    }
+
 }

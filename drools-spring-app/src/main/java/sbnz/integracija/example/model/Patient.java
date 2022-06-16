@@ -1,21 +1,38 @@
 package sbnz.integracija.example.model;
 
 import lombok.AllArgsConstructor;
-import sbnz.integracija.example.model.enums.Gender;
-import sbnz.integracija.example.model.enums.PhysicalActivity;
-import sbnz.integracija.example.model.User;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.InheritanceType.JOINED;
+
 @AllArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "patient")
+@Inheritance(strategy=JOINED)
 public class Patient extends User{
+
+    @Column(name = "age")
 	private int age;
+
+    @Column(name = "gender", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Column(name = "bmd")
+    private double bmd;
+
+    @Column(name = "physical_activity", nullable = false)
+    @Enumerated(EnumType.STRING)
     private PhysicalActivity physicalActivity;
-    private int bottomPulse;
-    private int upperPulse;
-    private List<Therapy> therapies;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     private List<Diagnosis> medicalHistory;
 
     public Patient() {
@@ -23,72 +40,26 @@ public class Patient extends User{
     }
 
     public Patient(Long id, String username, String pass, String name,String surname, int age, PhysicalActivity pa) {
-        this.id = id;
-        this.username = username;
-        this.password = pass;
-        this.surname = surname;
+        super(id, username, pass, name, surname);
         this.age = age;
-        this.name = name;
-        this.bottomPulse = 0;
-        this.upperPulse = 0;
         this.physicalActivity = pa;
-        this.therapies = new ArrayList<Therapy>();
+        this.bmd = 0;
         this.medicalHistory = new ArrayList<Diagnosis>();
     }
 
-	public int getAge() {
-		return age;
-	}
+    public Patient(Long id, String username, String pass, String name,String surname, int age, PhysicalActivity pa, Gender g) {
+        super(id, username, pass, name, surname);
+        this.age = age;
+        this.gender = g;
+        this.physicalActivity = pa;
+        this.bmd = 0;
+        this.medicalHistory = new ArrayList<Diagnosis>();
+    }
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+    public void addMedicalHistory(Diagnosis d) {
+    	if(!this.medicalHistory.contains(d)) {
+    		this.medicalHistory.add(d);
+    	}
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public PhysicalActivity getPhysicalActivity() {
-		return physicalActivity;
-	}
-
-	public void setPhysicalActivity(PhysicalActivity physicalActivity) {
-		this.physicalActivity = physicalActivity;
-	}
-
-	public int getBottomPulse() {
-		return bottomPulse;
-	}
-
-	public void setBottomPulse(int bottomPulse) {
-		this.bottomPulse = bottomPulse;
-	}
-
-	public int getUpperPulse() {
-		return upperPulse;
-	}
-
-	public void setUpperPulse(int upperPulse) {
-		this.upperPulse = upperPulse;
-	}
-
-	public List<Therapy> getTherapies() {
-		return therapies;
-	}
-
-	public void setTherapies(List<Therapy> therapies) {
-		this.therapies = therapies;
-	}
-
-	public List<Diagnosis> getMedicalHistory() {
-		return medicalHistory;
-	}
-
-	public void setMedicalHistory(List<Diagnosis> medicalHistory) {
-		this.medicalHistory = medicalHistory;
-	}
 }

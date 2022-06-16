@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="41fc49e7-6b02-454b-ac39-dff777d59d08" name="Default Changelist" comment="" />
+    <list default="true" id="41fc49e7-6b02-454b-ac39-dff777d59d08" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sistem za preporuku fizioterapije.docx" beforeDir="false" afterPath="$PROJECT_DIR$/Sistem za preporuku fizioterapije.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/SampleAppService.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/SampleAppService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Diagnosis.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Diagnosis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Illness.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Illness.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/TestResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/TestResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Therapist.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Therapist.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Therapy.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/Therapy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/enums/Frequency.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/enums/PhysicalActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/enums/PhysicalActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/enums/Symptom.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/enums/Symptom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/enums/TestType.java" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-app/src/main/java/sbnz/integracija/example/model/enums/TestType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-kjar/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/drools-spring-kjar/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-kjar/src/main/resources/sbnz/integracija/pulsePaHigh.drl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-kjar/src/main/resources/sbnz/integracija/pulsePaLow.drl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/drools-spring-kjar/src/main/resources/sbnz/integracija/pulsePaMid.drl" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,20 +42,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/drools-spring-app" />
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../HomeSafetyProject/AdminApp" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -44,6 +53,8 @@
       <option name="presentableId" value="Default" />
       <updated>1653305295233</updated>
       <workItem from="1653305296496" duration="136000" />
+      <workItem from="1655239680777" duration="99000" />
+      <workItem from="1655239794799" duration="807000" />
     </task>
     <servers />
   </component>
@@ -60,5 +71,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -1,0 +1,97 @@
+package sbnz.integracija;
+
+import java.lang.Math;
+import java.time.LocalDate;
+
+import sbnz.integracija.example.model.Therapy;
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Appointment;
+import sbnz.integracija.example.model.Illness;
+import sbnz.integracija.example.model.Diagnosis;
+import sbnz.integracija.example.model.JointMotionRange;
+import sbnz.integracija.example.model.enums.PhysicalActivity;
+import sbnz.integracija.example.model.enums.TherapyType;
+import sbnz.integracija.example.model.enums.Symptom;
+
+rule "Therapy - KINESI"
+	agenda-group "therapy"
+	salience 2
+    when
+    	$a: Appointment(diagnosis.illness != null, jointMotionRange != null, resolved == false, $patientId: patient.id, $illnessId: diagnosis.illness.id, $jointMotionRangeId: jointMotionRange.id, $diagnosisId: diagnosis.id)
+    	$j: JointMotionRange(id == jointMotionRangeId, $score: getScoreByFlexions(gender), $score <= 2)
+    	$d: Diagnosis(id == $diagnosisId)
+        $i: Illness(id == $illnessId, $symptoms: symptoms )
+        $p: Patient(id == $patientId, $age: age, $physicalActivity: physicalActivity )
+        Number($value : intValue == 0) from accumulate(
+        	Symptom($t:this, this == Symptom.BONE_FRACTURE) from $symptoms,
+        	count($t)
+        )
+        $minutesActiveTherapyTotal: Number() from accumulate(
+         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $p.medicalHistory and
+         	$activeTherapies: List(size > 0) from collect(
+         		Therapy(this.getEndDate() == null, therapyType != TherapyType.ELETRIC_THERAPY) from $therapies
+         	),
+         	$minutesPerDiagnosis: Number() from accumulate(
+	    		Therapy($minutes: minutes) from $activeTherapies,
+				sum($minutes)
+	    	)
+         	sum($minutesPerDiagnosis)
+         )
+        eval( Math.ceil($minutesActiveTherapyTotal + $age/2) <= 150 )
+    then
+    	modify ($p) { addMedicalHistory($d); }
+        modify ($d) { addTherapy(new Therapy(TherapyType.KINESI_THERAPY, $score * 15 * $physicalActivity.getActivityValue()); }
+        modify ($a) { setResolved(true); }
+        System.out.println("Set therapy - KINESI");
+end
+
+rule "Therapy - POOL"
+	agenda-group "therapy"
+	salience 2
+    when
+    	$a: Appointment(diagnosis.illness != null, jointMotionRange != null, resolved == false, $patientId: patient.id, $jointMotionRangeId: jointMotionRange.id, $diagnosisId: diagnosis.id)
+    	$j: JointMotionRange(id == jointMotionRangeId, $score: getScoreByFlexions(gender), $score >= 2)
+    	$d: Diagnosis(id == $diagnosisId)
+        $p: Patient(id == $patientId, $age: age, $physicalActivity: physicalActivity )
+
+        $minutesActiveTherapyTotal: Number() from accumulate(
+         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $p.medicalHistory and
+         	$activeTherapies: List(size > 0) from collect(
+         		Therapy(this.getEndDate() == null, therapyType == TherapyType.POOL_THERAPY) from $therapies
+         	),
+         	$minutesPerDiagnosis: Number() from accumulate(
+	    		Therapy($minutes: minutes) from $activeTherapies,
+				sum($minutes)
+	    	)
+         	sum($minutesPerDiagnosis)
+         )
+        eval( Math.ceil($minutesActiveTherapyTotal + $age/2) <= 120 )
+    then
+    	modify ($p) { addMedicalHistory($d); }
+        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $score * 10 * $physicalActivity.getActivityValue()); }
+        modify ($a) { setResolved(true); }
+        System.out.println("Set therapy - POOL");
+end
+
+rule "Therapy - ELETRIC"
+	agenda-group "therapy"
+	salience 1
+    when
+    	$a: Appointment(diagnosis.illness != null, jointMotionRange != null, resolved == false, $patientId: patient.id, $jointMotionRangeId: jointMotionRange.id, $diagnosisId: diagnosis.id)
+    	$j: JointMotionRange(id == jointMotionRangeId, $score: getScoreByFlexions(gender), $score >= 2)
+    	$d: Diagnosis(id == $diagnosisId)
+        $p: Patient(id == $patientId, $age: age, $physicalActivity: physicalActivity )
+
+        accumulate(
+         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $p.medicalHistory,
+         	Number(intValue == 0) from accumulate(
+         		Therapy($t: this, therapyType == TherapyType.ELETRIC_THERAPY, $therapyEndDate: startDate.plusDays(14), $therapyEndDate.isAfter(LocalDate.now().minusDays(15))) from $therapies,
+         		count($t)
+         	)         	
+         )
+    then
+    	modify ($p) { addMedicalHistory($d); }
+        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $score * 10); }
+        modify ($a) { setResolved(true); }
+        System.out.println("Set therapy - POOL");
+end

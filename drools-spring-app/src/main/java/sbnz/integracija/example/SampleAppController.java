@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import sbnz.integracija.example.facts.Item;
 import sbnz.integracija.example.model.Patient;
-import sbnz.integracija.example.model.enums.PhysicalActivity;
+import sbnz.integracija.example.model.PhysicalActivity;
 
 @RestController
 public class SampleAppController {
@@ -35,7 +34,7 @@ public class SampleAppController {
 
 		return i2;
 	}*/
-	
+
 	@RequestMapping(value = "/patient", method = RequestMethod.GET, produces = "application/json")
 	public Patient getInfo(@RequestParam(required = true) String id, @RequestParam(required = true) String username,
 			@RequestParam(required = true) String password, @RequestParam(required = true) String name,
@@ -51,7 +50,7 @@ public class SampleAppController {
 			ps = PhysicalActivity.VERY_ACTIVE;
 		}*/
 		log.debug("pa:" + PhysicalActivity.valueOf(physicalActivity).toString());
-		
+
 		Patient newItem = new Patient(Long.parseLong(id), username, password, name, surname, age, PhysicalActivity.valueOf(physicalActivity));
 
 		log.debug("Patient request received for: " + newItem);
@@ -60,7 +59,7 @@ public class SampleAppController {
 
 		return i2;
 	}
-	
-	
-	
+
+
+
 }

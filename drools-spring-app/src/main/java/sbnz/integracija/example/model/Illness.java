@@ -1,18 +1,38 @@
 package sbnz.integracija.example.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sbnz.integracija.example.model.enums.Symptom;
 
+import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "illness")
 public class Illness {
-    private String name;
-    private List<Symptom> symptoms;
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "name", unique = true)
+	private String name;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "illnessSymptoms",
+			joinColumns = @JoinColumn(name = "illness_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "symptom_id", referencedColumnName = "id"))
+    private List<Symptom> illnessSymptoms;
+
+	@Column(name = "testType", nullable = false)
+	@Enumerated(EnumType.STRING)
+    private TestType testType;
+
+	@OneToMany(fetch = FetchType.LAZY,  cascade= CascadeType.ALL)
+	private List<Diagnosis> diagnosis;
+
 }

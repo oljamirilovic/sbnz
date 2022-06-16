@@ -1,0 +1,19 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Illness;
+import sbnz.integracija.example.model.TestResult;
+import sbnz.integracija.example.model.enums.PhysicalActivity;
+import sbnz.integracija.example.model.enums.TestType;
+import sbnz.integracija.example.model.enums.Gender;
+
+rule "Test - DEXA"
+	agenda-group "tests"
+    when
+    	$tr: TestResult( $patientId: patient.id, $illnessId: illness.id, score == 0)
+        $i: Ilness(id == $illnessId, testType == TestType.BONE_DENSITY )
+        $p: Patient(id == $patientId, bmd != 0, $myBmd: bmd, $gender: gender, $age: age )
+    then
+        modify ($tr) { calculateScoreForDEXA(($myBmd - calculateRefBmd($gender, $age)) / calculateSD($gender, $age)) }
+        System.out.println("Calculated DEXA test");
+end

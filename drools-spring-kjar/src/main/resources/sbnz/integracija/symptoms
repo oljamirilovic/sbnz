@@ -1,0 +1,29 @@
+package sbnz.integracija;
+
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Appointment;
+import sbnz.integracija.example.model.Illness;
+import sbnz.integracija.example.model.TestResult;
+import sbnz.integracija.example.model.enums.PhysicalActivity;
+import sbnz.integracija.example.model.enums.TestType;
+import sbnz.integracija.example.model.enums.Gender;
+import sbnz.integracija.example.model.enums.Symptom;
+
+rule "Symptoms" 
+	agenda-group "check-symptoms"
+	salience ((100*$value) / $symptoms.size())
+    when
+    	$a: Appointment(diagnosis.illness == null, resolved == false, $patientId: patient.id, $presentSymptoms: currentSymptoms)
+        $i: Illness($name: name, $symptoms: symptoms)
+        $p: Patient( id == $patientId, $chart: medicalHistory)
+        Number($value: intValue >= 3) from accumulate(
+        	Symptom($t:this, this memberOf $symptoms) from $presentSymptoms,
+        	count($t)
+        )
+        
+    then
+    	System.out.println("Illness: " + $name);
+    	System.out.println("Num of symptoms: " + $value + "/" + $symptoms.size());
+    	modify($a) { setIllnessInDiagnosis($i) }
+    	// TODO check if testRequired?
+end

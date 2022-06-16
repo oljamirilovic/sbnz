@@ -6,5 +6,9 @@ public enum Symptom {
     RECENT_FRACTURES,
     HIP_PAIN,
     BACK_PAIN,
-    BAD_POSTURE
+    BAD_POSTURE,
+    SMOKER,
+    HORMONE_INTAKE,
+    EARLY_MENOPAUSE,
+    BONE_FRACTURE
 }
