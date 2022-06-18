@@ -1,0 +1,64 @@
+<div id="container-div">
+  <div id="img-div">
+    <img
+      class="mat-elevation-z8"
+      src="assets/images/sbnz22.jpg"
+      alt="Default image"
+    />
+  </div>
+  <div id="form-holder-div" class="mat-elevation-z8">
+    <h3></h3>
+    <form class="example-form" [formGroup]="loginForm">
+      <mat-card-content>
+        <mat-form-field class="example-full-width" id="username-field">
+          <input
+            matInput
+            class="form-control"
+            type="text"
+            placeholder="Username"
+            formControlName="username"
+            id="username"
+            name="username"
+            required
+          />
+          <mat-hint
+            *ngIf="loginForm.controls['username'].dirty && loginForm.controls['username'].errors?.['required']"
+            >Enter your username</mat-hint
+          >
+        </mat-form-field>
+        <mat-form-field class="example-full-width" id="password-field">
+          <input
+            matInput
+            class="form-control"
+            placeholder="Password"
+            [type]="hide ? 'password' : 'text'"
+            formControlName="password"
+            required
+            id="password"
+            name="password"
+          />
+          <mat-icon matSuffix (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <mat-hint
+            *ngIf="loginForm.controls['password'].dirty && loginForm.controls['password'].errors?.['required'] "
+            >Enter your password</mat-hint
+          >
+        </mat-form-field>
+      </mat-card-content>
+      <div id="button-div">
+        <button
+          mat-flat-button
+          type="submit"
+          class="submit-button mat-elevation-z8"
+          (click)="login()"
+          id="submit-button"
+          [disabled]="loginForm.invalid"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="jw-modal-background"></div>

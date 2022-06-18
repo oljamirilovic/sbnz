@@ -22,7 +22,6 @@ import static javax.persistence.InheritanceType.JOINED;
 @Table(name="users")
 @Inheritance(strategy=JOINED)
 public class User implements UserDetails {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "id")
