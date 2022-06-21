@@ -35,6 +35,9 @@ public class Patient extends User{
     @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
     private List<Diagnosis> medicalHistory;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    private List<Family> parents;
+
     public Patient() {
     	super();
     }
@@ -62,4 +65,14 @@ public class Patient extends User{
     	}
     }
 
+    public boolean hadIllness(Illness illness){
+        if(this.getMedicalHistory() != null && !this.getMedicalHistory().isEmpty()){
+            for (Diagnosis d: this.getMedicalHistory()) {
+                if(d.getIllness()!=null && d.getIllness().getName().equals(illness.getName())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

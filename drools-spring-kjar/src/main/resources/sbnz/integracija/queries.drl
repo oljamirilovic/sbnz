@@ -1,0 +1,49 @@
+package sbnz.integracija;
+
+import java.lang.Math;
+import java.util.List;
+import java.time.LocalDate;
+
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Appointment;
+import sbnz.integracija.example.model.Diagnosis;
+import sbnz.integracija.example.model.Therapy;
+import sbnz.integracija.example.model.JointMotionRange;
+import sbnz.integracija.example.model.utils.DateUtil;
+
+global Patient patient;
+
+query jointRangeChanged(JointMotionRange current, JointMotionRange old)
+    eval(current.getScoreByFlexions(patient.getGender()) != old.getScoreByFlexions(patient.getGender()))
+end
+
+query therapyMinDaysPast(Therapy currentTherapy)
+	eval(DateUtil.getDaysElapsed(currentTherapy.getStartDate()) >= 14)
+end
+
+query isTherapyNotFinished(Therapy currentTherapy)
+	eval(currentTherapy.getEndDate() == null)
+end
+
+query hasMoreThanHalf(List<LocalDate> recordedTherapySessions, LocalDate startDate)
+	eval(recordedTherapySessions.size() >= Math.ceil(DateUtil.getDaysElapsed(startDate) / 2)))
+end
+
+query rangeChangeForOngoingTherapy(JointMotionRange current, JointMotionRange old, Therapy therapy)
+	therapyMinDaysPast(therapy) and isTherapyNotFinished(therapy) and jointRangeChanged(current, old;) and hasMoreThanHalf(therapy.getRecordedTherapySessions(), therapy.getStartDate())
+end
+
+rule "End current therapy and start a new one"
+    when
+    	$t: Therapy()
+    	$d: Diagnosis(therapyList contains $t)
+    	$a: Appointment(diagnosis == $d, $oldJMR: jointMotionRange)
+        $currentJMR: JointMotionRange()
+        rangeChangeForOngoingTherapy($currentJMR, $oldJMR, $t;)
+    then
+        System.out.println("Rule: " + drools.getRule().getName());
+        modify($t) { setEndDate(LocalDate.now()); }
+        //TODO kreirati novu terapiju?
+        insert( new Appointment($a, $currentJMR));
+end
+

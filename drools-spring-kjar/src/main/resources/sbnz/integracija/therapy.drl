@@ -73,7 +73,7 @@ rule "Therapy - POOL"
         System.out.println("Set therapy - POOL");
 end
 
-rule "Therapy - ELETRIC"
+rule "Therapy - ELECTRIC"
 	agenda-group "therapy"
 	salience 1
     when
@@ -87,7 +87,7 @@ rule "Therapy - ELETRIC"
          	Number(intValue == 0) from accumulate(
          		Therapy($t: this, therapyType == TherapyType.ELETRIC_THERAPY, $therapyEndDate: startDate.plusDays(14), $therapyEndDate.isAfter(LocalDate.now().minusDays(15))) from $therapies,
          		count($t)
-         	)         	
+         	)
          )
     then
     	modify ($p) { addMedicalHistory($d); }

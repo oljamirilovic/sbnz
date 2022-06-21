@@ -8,12 +8,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../root/material-module';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from '../shared/shared.module';
+import { ViewPatientsComponent } from './components/view-patients/view-patients.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { ViewOnePatientComponent } from './components/view-one-patient/view-one-patient.component';
 
 
 
 @NgModule({
   declarations: [
-    TherapistDashboardComponent
+    LogoutComponent,
+    TherapistDashboardComponent,
+    ViewPatientsComponent,
+    ViewOnePatientComponent
   ],
   imports: [
     CommonModule,

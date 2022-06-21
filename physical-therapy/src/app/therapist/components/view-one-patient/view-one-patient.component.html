@@ -1,0 +1,180 @@
+<div>
+  <div id="img-div">
+    <img
+      class="mat-elevation-z8"
+      src="assets/images/user.png"
+      alt="User image"
+    />
+  </div>
+  <mat-card>
+    <table
+      mat-table
+      [dataSource]="userDataSource"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+      class="mat-elevation-z8"
+    >
+      <ng-container matColumnDef="Username">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="username"
+          sortActionDescription="Sort by username"
+        >
+          Username
+        </th>
+        <td mat-cell *matCellDef="let element" name="username">
+          {{ element.username }}
+        </td>
+      </ng-container>
+
+      <!-- FirstName Column -->
+      <ng-container matColumnDef="FirstName">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="firstName"
+          sortActionDescription="Sort by firstName"
+        >
+          FirstName
+        </th>
+        <td mat-cell *matCellDef="let element" name="firstName">
+          {{ element.firstName }}
+        </td>
+      </ng-container>
+
+      <!-- Surname Column -->
+      <ng-container matColumnDef="LastName">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="lastName"
+          sortActionDescription="Sort by lastName"
+        >
+          LastName
+        </th>
+        <td mat-cell *matCellDef="let element" name="lastName">
+          {{ element.lastName }}
+        </td>
+      </ng-container>
+
+      <!-- Age Column -->
+      <ng-container matColumnDef="Age">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="age"
+          sortActionDescription="Sort by age"
+        >
+          Age
+        </th>
+        <td mat-cell *matCellDef="let element" name="age">
+          {{ element.age }}
+        </td>
+      </ng-container>
+
+      <!-- Gender Column -->
+      <ng-container matColumnDef="Gender">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="gender"
+          sortActionDescription="Sort by gender"
+        >
+          Gender
+        </th>
+        <td mat-cell name="gender" *matCellDef="let element">
+          {{ element.gender }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ViewFamily">
+        <th mat-header-cell *matHeaderCellDef>Family</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            name="edit-ordered-item"
+            (click)="viewFamily()"
+            matTooltip="View patients parents."
+          >
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card>
+</div>
+
+<mat-card>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+      class="mat-elevation-z8"
+      id="dataSource"
+    >
+      <ng-container matColumnDef="Date">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="date"
+          sortActionDescription="Sort by date"
+        >
+          Date diagnosed
+        </th>
+        <td mat-cell *matCellDef="let element" name="date">
+          {{ element.date }}
+        </td>
+      </ng-container>
+  
+      <!-- FirstName Column -->
+      <ng-container matColumnDef="Illness">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="illness"
+          sortActionDescription="Sort by illness"
+        >
+        Illness
+        </th>
+        <td mat-cell *matCellDef="let element" name="illness">
+          {{ element.illness }}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="ViewAppointment">
+        <th mat-header-cell *matHeaderCellDef>Appoinment</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            name="edit-ordered-item"
+            (click)="viewAppoinment(element.id)"
+            matTooltip="View appointment details."
+          >
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="ViewTherapy">
+        <th mat-header-cell *matHeaderCellDef>Therapy</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            name="edit-ordered-item"
+            (click)="viewTherapy(element.id)"
+            matTooltip="View therapy details."
+          >
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedDiagnosisColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedDiagnosisColumns"></tr>
+    </table>
+  </mat-card>

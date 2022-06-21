@@ -23,6 +23,7 @@ public class Appointment {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "therapist_id", referencedColumnName = "id")
 	private Therapist therapist;
 
 	@Column(name = "date", nullable=false)
@@ -35,6 +36,7 @@ public class Appointment {
     private List<Symptom> appointmentSymptoms;
 
 	@OneToOne
+	@JoinColumn(name = "diagnosis_id", referencedColumnName = "id")
     private Diagnosis diagnosis;
 
 	@Column(name = "resolved")

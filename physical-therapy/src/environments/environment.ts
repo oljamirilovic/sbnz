@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   baseUrl: 'http://localhost:8080',
   login: 'auth/login',
+  users: 'api/users',
+  diagnosis: 'api/diagnosis'
 };
 
 /*

@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../root/material-module';
 import { ToastrModule } from 'ngx-toastr';
+import { UserService } from './services/user-service/user.service';
+import { DiagnosisService } from './services/diagnosis-service/diagnosis.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,6 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   exports: [
   ],
-  providers: [],
+  providers: [UserService, DiagnosisService],
 })
 export class SharedModule {}

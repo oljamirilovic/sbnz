@@ -37,6 +37,7 @@ public class Diagnosis {
 	private List<JointMotionRange> jointMotionRangeList;
 
     @OneToOne
+	@JoinColumn(name = "test_result_id", referencedColumnName = "id")
     private TestResult testResult;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -44,6 +45,7 @@ public class Diagnosis {
     private Patient patient;
 
 	@OneToOne
+	@JoinColumn(name = "appointment_id", referencedColumnName = "id")
     private Appointment appointment;
 
 	public void addTherapy(Therapy t) {

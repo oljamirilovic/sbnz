@@ -1,1 +1,102 @@
-<p>therapist-dashboard works!</p>
+<mat-toolbar class="mat-elevation-z8">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  <span class="span">Physical Therapy App</span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <img
+      class="mat-elevation-z8"
+      src="assets/images/sbnz22.jpg"
+      alt="Default image"
+    />
+
+    <h4 class="name">{{ this.user.username }}</h4>
+
+    <button
+      mat-button
+      class="menu-button"
+      (click)="onLogoutButtonClicked()"
+      id="logout-button"
+    >
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" (click)="this.activeView = '1'">
+      <span>All patients</span>
+    </button>
+    <!--
+    <button mat-button class="menu-button" (click)="this.activeView = '2'">
+      <span>Zahtevi za Digitalni Sertifikat</span>
+    </button>
+
+    <button mat-button class="menu-button" (click)="this.activeView = '3'">
+      <span>Izvestaj o Imunizaciji</span>
+    </button>
+
+    <button mat-button class="menu-button" (click)="this.activeView = '4'">
+      <span>Dostupne Vakcine</span>
+    </button>
+
+    <button mat-button class="menu-button" [matMenuTriggerFor]="menu">
+      <span>Arhiva gradjanskih dokumenata</span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="this.activeView = '5'">
+        Napredna pretraga
+      </button>
+      <button mat-menu-item (click)="this.activeView = '6'">
+        Obicna pretraga
+      </button>
+    </mat-menu>
+-->
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <!-- <app-izvestaj
+          class="registar"
+          *ngIf="this.activeView === '3'"
+        ></app-izvestaj> -->
+      <app-view-patients
+        class="registar"
+        *ngIf="this.activeView === '1'"
+        (onViewPatientChart)="onViewPatientChartClicked($event)"
+      ></app-view-patients>
+      <app-view-one-patient
+        [patientUsername]="this.selectedPatient"
+        class="registar"
+        *ngIf="this.activeView === '2'"
+      ></app-view-one-patient>
+      <!--<app-izvestaj
+        class="registar"
+        *ngIf="this.activeView === '3'"
+      ></app-izvestaj>
+      <app-inventory-form
+        class="items"
+        *ngIf="this.activeView === '4'"
+      ></app-inventory-form>
+      <app-arhiva-dokumenata
+        class="items"
+        *ngIf="this.activeView === '5'"
+      ></app-arhiva-dokumenata>
+      <app-obicna-pretraga
+        class="tables"
+        *ngIf="this.activeView === '6'"
+      ></app-obicna-pretraga>-->
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<app-logout
+  *ngIf="this.showModalLogout"
+  (onLogoutClose)="onLogoutCloseClicked($event)"
+></app-logout>
