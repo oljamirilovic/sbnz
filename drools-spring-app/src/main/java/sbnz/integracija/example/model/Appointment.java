@@ -35,7 +35,7 @@ public class Appointment {
 			inverseJoinColumns = @JoinColumn(name = "symptom_id", referencedColumnName = "id"))
     private List<Symptom> appointmentSymptoms;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "diagnosis_id", referencedColumnName = "id")
     private Diagnosis diagnosis;
 

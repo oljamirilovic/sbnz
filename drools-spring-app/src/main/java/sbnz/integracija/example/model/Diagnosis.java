@@ -27,7 +27,7 @@ public class Diagnosis {
     private LocalDate date;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "illness_id", referencedColumnName = "id")
+	@JoinColumn(name = "illness_id", referencedColumnName = "id", nullable = true)
     private Illness illness;
 
 	@OneToMany(fetch = FetchType.LAZY,  cascade= CascadeType.ALL)
@@ -37,8 +37,8 @@ public class Diagnosis {
 	private List<JointMotionRange> jointMotionRangeList;
 
     @OneToOne
-	@JoinColumn(name = "test_result_id", referencedColumnName = "id")
-    private TestResult testResult;
+	@JoinColumn(name = "test_result_id", referencedColumnName = "id", nullable = true)
+    private TestResult testResult;//TODO samo score?
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "patient_id", referencedColumnName = "id")

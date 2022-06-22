@@ -31,15 +31,27 @@
     </button>
 
     <mat-divider></mat-divider>
+    <mat-action-list>
+      <mat-list-item
+        (click)="this.activeView = '1'"
+        [ngClass]="this.activeView === '1' ? 'active-tab' : ''"
+        >All patients</mat-list-item
+      >
+      <mat-list-item
+        (click)="this.activeView = '3'"
+        [ngClass]="this.activeView === '3' ? 'active-tab' : ''"
+        >Your appointments</mat-list-item
+      >
+    </mat-action-list>
 
-    <button mat-button class="menu-button" (click)="this.activeView = '1'">
+    <!--<button mat-button class="menu-button" (click)="this.activeView = '1'">
       <span>All patients</span>
     </button>
-    <!--
-    <button mat-button class="menu-button" (click)="this.activeView = '2'">
-      <span>Zahtevi za Digitalni Sertifikat</span>
-    </button>
 
+    <button mat-button class="menu-button" (click)="this.activeView = '3'">
+      <span>Your appointments</span>
+    </button>
+    
     <button mat-button class="menu-button" (click)="this.activeView = '3'">
       <span>Izvestaj o Imunizaciji</span>
     </button>
@@ -63,10 +75,6 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content mat-elevation-z8">
-      <!-- <app-izvestaj
-          class="registar"
-          *ngIf="this.activeView === '3'"
-        ></app-izvestaj> -->
       <app-view-patients
         class="registar"
         *ngIf="this.activeView === '1'"
@@ -77,22 +85,17 @@
         class="registar"
         *ngIf="this.activeView === '2'"
       ></app-view-one-patient>
-      <!--<app-izvestaj
+      <app-view-appointments
         class="registar"
         *ngIf="this.activeView === '3'"
-      ></app-izvestaj>
-      <app-inventory-form
-        class="items"
+        (onStartAppointment)="onStartAppointmentClicked($event)"
+      ></app-view-appointments>
+      <app-start-appointment
+        [appointmentId]="this.selectedAppointment"
+        class="registar"
         *ngIf="this.activeView === '4'"
-      ></app-inventory-form>
-      <app-arhiva-dokumenata
-        class="items"
-        *ngIf="this.activeView === '5'"
-      ></app-arhiva-dokumenata>
-      <app-obicna-pretraga
-        class="tables"
-        *ngIf="this.activeView === '6'"
-      ></app-obicna-pretraga>-->
+        (onCancelAppointment)="this.activeView = '3'"
+      ></app-start-appointment>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -17,6 +17,7 @@ export class TherapistDashboardComponent implements OnInit {
   activeView = '1';
   user: UserWithToken;
   selectedPatient: string;
+  selectedAppointment: number;
 
   constructor(
     private observer: BreakpointObserver,
@@ -27,6 +28,7 @@ export class TherapistDashboardComponent implements OnInit {
     const temp = new BehaviorSubject<UserWithToken>(JSON.parse(localStorage.getItem('currentUser')!));
     this.user = temp.value;
     this.selectedPatient = '';
+    this.selectedAppointment = 0;
   }
 
   ngOnInit(): void {}
@@ -54,5 +56,10 @@ export class TherapistDashboardComponent implements OnInit {
   onViewPatientChartClicked(username: string){
     this.selectedPatient = username;
     this.activeView = '2';
+  }
+
+  onStartAppointmentClicked(appointmentId: number){
+    this.selectedAppointment = appointmentId;
+    this.activeView = '4';
   }
 }

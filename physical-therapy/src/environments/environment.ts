@@ -7,7 +7,9 @@ export const environment = {
   baseUrl: 'http://localhost:8080',
   login: 'auth/login',
   users: 'api/users',
-  diagnosis: 'api/diagnosis'
+  diagnosis: 'api/diagnosis',
+  appointment: 'api/appointment',
+  symptom: 'api/symptom',
 };
 
 /*

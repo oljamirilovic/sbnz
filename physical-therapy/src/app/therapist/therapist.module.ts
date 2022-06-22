@@ -11,6 +11,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ViewPatientsComponent } from './components/view-patients/view-patients.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ViewOnePatientComponent } from './components/view-one-patient/view-one-patient.component';
+import { ViewAppointmentsComponent } from './components/view-appointments/view-appointments.component';
+import { StartAppointmentComponent } from './components/start-appointment/start-appointment.component';
 
 
 
@@ -19,7 +21,9 @@ import { ViewOnePatientComponent } from './components/view-one-patient/view-one-
     LogoutComponent,
     TherapistDashboardComponent,
     ViewPatientsComponent,
-    ViewOnePatientComponent
+    ViewOnePatientComponent,
+    ViewAppointmentsComponent,
+    StartAppointmentComponent
   ],
   imports: [
     CommonModule,

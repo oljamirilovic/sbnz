@@ -39,16 +39,16 @@ insert into family(child_id, parent_id) values (3, 2);
 insert into family(child_id, parent_id) values (3, 6);
 
 ----------------SYMPTOMS------------------------
-insert into symptom(name) values ('HEIGHT_LOSS');
-insert into symptom(name) values ('WEIGHT_LOSS');
-insert into symptom(name) values ('HIP_PAIN');
-insert into symptom(name) values ('BACK_PAIN');
-insert into symptom(name) values ('NECK_PAIN');
-insert into symptom(name) values ('BAD_POSTURE');
+insert into symptom(name) values ('HEIGHT LOSS');
+insert into symptom(name) values ('WEIGHT LOSS');
+insert into symptom(name) values ('HIP PAIN');
+insert into symptom(name) values ('BACK PAIN');
+insert into symptom(name) values ('NECK PAIN');
+insert into symptom(name) values ('BAD POSTURE');
 insert into symptom(name) values ('SMOKER');
-insert into symptom(name) values ('HORMONE_IMBALANCE');
-insert into symptom(name) values ('EARLY_MENOPAUSE');
-insert into symptom(name) values ('BONE_FRACTURE');
+insert into symptom(name) values ('HORMONE IMBALANCE');
+insert into symptom(name) values ('EARLY MENOPAUSE');
+insert into symptom(name) values ('BONE FRACTURE');
 
 ----------------ILLNESSES------------------------
 insert into illness(name, testType) values ('OSTEOPOROSIS', 'BONE_DENSITY');
@@ -73,12 +73,15 @@ insert into illnessSymptoms(illness_id, symptom_id) values (1, 10);
 ---------------TEST_RESULTS------------------------
 insert into test_result(score) values (3);
 
-----------------APPOINTMENTS------------------------
-insert into appointment(therapist_id, date, resolved) values (1, '2021-10-23', true);
-
 ----------------DIAGNOSIS------------------------
-insert into diagnosis(date, illness_id, test_result_id, patient_id, appointment_id)
-values ('2021-10-23', 1, 1, 3, 1);
+insert into diagnosis(date, illness_id, test_result_id, patient_id)
+values ('2021-10-23', 1, 1, 3);
+insert into diagnosis(date, illness_id, test_result_id, patient_id)
+values ('2022-06-22', null, null, 3);
+
+----------------APPOINTMENTS------------------------
+insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2021-10-23', 1, true);
+insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2022-06-22', 2, false);
 
 ----------------THERAPY------------------------
 insert into therapy(minutes, therapyType, startDate, endDate, diagnosis_id) values

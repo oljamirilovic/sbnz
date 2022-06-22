@@ -6,10 +6,11 @@ import { MaterialModule } from '../root/material-module';
 import { ToastrModule } from 'ngx-toastr';
 import { UserService } from './services/user-service/user.service';
 import { DiagnosisService } from './services/diagnosis-service/diagnosis.service';
+import { AppointmentService } from './services/appointment-service/appointment.service';
+import { SymptomService } from './services/symptom-service/symptom.service';
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
 
   imports: [
     CommonModule,
@@ -22,8 +23,12 @@ import { DiagnosisService } from './services/diagnosis-service/diagnosis.service
       preventDuplicates: true,
     }),
   ],
-  exports: [
+  exports: [],
+  providers: [
+    UserService,
+    DiagnosisService,
+    AppointmentService,
+    SymptomService,
   ],
-  providers: [UserService, DiagnosisService],
 })
 export class SharedModule {}
