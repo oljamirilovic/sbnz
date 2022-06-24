@@ -14,8 +14,6 @@ import java.util.Collection;
 
 import static javax.persistence.InheritanceType.JOINED;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -44,6 +42,8 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private UserRole role;
+
+    public User(){}
 
     public User(Long id, String username, String password, String firstName, String lastName){
         this.id = id;

@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import sbnz.integracija.example.model.Appointment;
-import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Diagnosis;
 
 import java.util.List;
 
@@ -21,4 +21,14 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query("select d from Appointment d left join fetch d.diagnosis i where d.id =?1")
     Appointment findById(long id);
+
+    @Query("select d from Appointment d left join fetch d.diagnosis i where i.patient.id =?1 and d.resolved = true")
+    List<Appointment> findByPatientIdAndResolved(long id);
+
+    @Query("select d.diagnosis from Appointment d left join fetch d.diagnosis.jointMotionRangeList i where d.id =?1")
+    Diagnosis findDiagnosisByAppointmentIdWithJmrs(long id);
+
+    @Query("select d.diagnosis from Appointment d left join fetch d.diagnosis.illness i where d.diagnosis.patient.id =?1 and d.resolved = true")
+    List<Diagnosis> findDiagnosisByPatientIdAndResolved(long id);
+
 }

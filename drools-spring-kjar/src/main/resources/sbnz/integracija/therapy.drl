@@ -17,19 +17,18 @@ rule "Therapy - KINESI"
 	agenda-group "therapy"
 	salience 2
     when
-    	$a: Appointment(diagnosis.illness != null, jointMotionRange != null, resolved == false, $patientId: patient.id, $illnessId: diagnosis.illness.id, $jointMotionRangeId: jointMotionRange.id, $diagnosisId: diagnosis.id)
-    	$j: JointMotionRange(id == jointMotionRangeId, $score: getScoreByFlexions(gender), $score <= 2)
-    	$d: Diagnosis(id == $diagnosisId)
+    	$a: Appointment(diagnosis.illness != null, resolved == false, $flexionScore: getScoreOfLastJmr(), $flexionScore <= 2, $diagnosisId: diagnosis.id )
+    	$d: Diagnosis(id == $diagnosisId, testResult!=null, (testResult.score > 1 || testResult.score == 0), $patientId: patient.id, $illnessId: illness.id)
         $i: Illness(id == $illnessId, $symptoms: symptoms )
-        $p: Patient(id == $patientId, $age: age, $physicalActivity: physicalActivity )
+        $p: Patient(id == $patientId, $age: age, $physicalActivity: physicalActivity, $medicalHistory: medicalHistory)
         Number($value : intValue == 0) from accumulate(
-        	Symptom($t:this, this == Symptom.BONE_FRACTURE) from $symptoms,
+        	Symptom($t:this, name == "BONE FRACTURE") from $symptoms,
         	count($t)
         )
         $minutesActiveTherapyTotal: Number() from accumulate(
-         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $p.medicalHistory and
+         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $medicalHistory and
          	$activeTherapies: List(size > 0) from collect(
-         		Therapy(this.getEndDate() == null, therapyType != TherapyType.ELETRIC_THERAPY) from $therapies
+         		Therapy(endDate == null, therapyType != TherapyType.ELECTRIC_THERAPY) from $therapies
          	),
          	$minutesPerDiagnosis: Number() from accumulate(
 	    		Therapy($minutes: minutes) from $activeTherapies,
@@ -39,25 +38,25 @@ rule "Therapy - KINESI"
          )
         eval( Math.ceil($minutesActiveTherapyTotal + $age/2) <= 150 )
     then
-    	modify ($p) { addMedicalHistory($d); }
-        modify ($d) { addTherapy(new Therapy(TherapyType.KINESI_THERAPY, $score * 15 * $physicalActivity.getActivityValue()); }
-        modify ($a) { setResolved(true); }
         System.out.println("Set therapy - KINESI");
+        System.out.println("Appointment resolved");
+        System.out.println("///////////////////////////////////////////////////");
+        modify ($a) { setResolved(true); }
+        modify ($d) { addTherapy(new Therapy(TherapyType.KINESI_THERAPY, $score * 15 * $physicalActivity.getActivityValue())); }
 end
 
 rule "Therapy - POOL"
 	agenda-group "therapy"
 	salience 2
     when
-    	$a: Appointment(diagnosis.illness != null, jointMotionRange != null, resolved == false, $patientId: patient.id, $jointMotionRangeId: jointMotionRange.id, $diagnosisId: diagnosis.id)
-    	$j: JointMotionRange(id == jointMotionRangeId, $score: getScoreByFlexions(gender), $score >= 2)
-    	$d: Diagnosis(id == $diagnosisId)
-        $p: Patient(id == $patientId, $age: age, $physicalActivity: physicalActivity )
+    	$a: Appointment(diagnosis.illness != null, resolved == false, $flexionScore: getScoreOfLastJmr(), $flexionScore >= 2, $diagnosisId: diagnosis.id)
+    	$d: Diagnosis(id == $diagnosisId, testResult!=null, (testResult.score > 1 || testResult.score == 0), $patientId: patient.id)
+        $p: Patient(id == $patientId, $age: age, $physicalActivity: physicalActivityy, $medicalHistory: medicalHistory )
 
         $minutesActiveTherapyTotal: Number() from accumulate(
-         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $p.medicalHistory and
+         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $medicalHistory and
          	$activeTherapies: List(size > 0) from collect(
-         		Therapy(this.getEndDate() == null, therapyType == TherapyType.POOL_THERAPY) from $therapies
+         		Therapy(endDate == null, therapyType == TherapyType.POOL_THERAPY) from $therapies
          	),
          	$minutesPerDiagnosis: Number() from accumulate(
 	    		Therapy($minutes: minutes) from $activeTherapies,
@@ -67,31 +66,48 @@ rule "Therapy - POOL"
          )
         eval( Math.ceil($minutesActiveTherapyTotal + $age/2) <= 120 )
     then
-    	modify ($p) { addMedicalHistory($d); }
-        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $score * 10 * $physicalActivity.getActivityValue()); }
-        modify ($a) { setResolved(true); }
         System.out.println("Set therapy - POOL");
+        System.out.println("Appointment resolved");
+        System.out.println("///////////////////////////////////////////////////");
+        modify ($a) { setResolved(true); }
+        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $score * 10 * $physicalActivity.getActivityValue())); }
 end
 
 rule "Therapy - ELECTRIC"
 	agenda-group "therapy"
-	salience 1
+	salience 2
     when
-    	$a: Appointment(diagnosis.illness != null, jointMotionRange != null, resolved == false, $patientId: patient.id, $jointMotionRangeId: jointMotionRange.id, $diagnosisId: diagnosis.id)
-    	$j: JointMotionRange(id == jointMotionRangeId, $score: getScoreByFlexions(gender), $score >= 2)
-    	$d: Diagnosis(id == $diagnosisId)
-        $p: Patient(id == $patientId, $age: age, $physicalActivity: physicalActivity )
+    	$a: Appointment(diagnosis.illness != null, resolved == false, $flexionScore: getScoreOfLastJmr(), $flexionScore >= 2, $diagnosisId: diagnosis.id)
+    	$d: Diagnosis(id == $diagnosisId, testResult!=null, (testResult.score > 1 || testResult.score == 0), $patientId: patient.id)
+        $p: Patient(id == $patientId, $age: age, $medicalHistory: medicalHistory )
 
         accumulate(
-         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $p.medicalHistory,
+         	Diagnosis($d: this, $therapies: therapyList, $therapies != null) from $medicalHistory,
          	Number(intValue == 0) from accumulate(
-         		Therapy($t: this, therapyType == TherapyType.ELETRIC_THERAPY, $therapyEndDate: startDate.plusDays(14), $therapyEndDate.isAfter(LocalDate.now().minusDays(15))) from $therapies,
+         		Therapy($t: this, therapyType == TherapyType.ELECTRIC_THERAPY,
+         		 $therapyEndDate: startDate.plusDays(14),
+         		  $therapyEndDate.isAfter(LocalDate.now().minusDays(15))) from $therapies,
          		count($t)
          	)
          )
     then
-    	modify ($p) { addMedicalHistory($d); }
-        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $score * 10); }
+        System.out.println("Set therapy - ELECTRIC");
+        System.out.println("Appointment resolved");
+        System.out.println("///////////////////////////////////////////////////");
         modify ($a) { setResolved(true); }
-        System.out.println("Set therapy - POOL");
+        modify ($d) { addTherapy(new Therapy(TherapyType.ELECTRIC_THERAPY, $score * 10); }
+end
+
+rule "No Therapy"
+	agenda-group "therapy"
+	salience 1
+    when
+    	$a: Appointment(diagnosis.illness != null, jointMotionRange != null, resolved == false, $diagnosisId: diagnosis.id)
+    	$d: Diagnosis(id == $diagnosisId, testResult!=null, testResult.score == 1)
+
+    then
+        modify ($a) { setResolved(true); }
+        System.out.println("No therapy required when test results show no risk.");
+        System.out.println("Appointment resolved");
+        System.out.println("///////////////////////////////////////////////////");
 end

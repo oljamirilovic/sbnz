@@ -11,7 +11,6 @@ import java.util.List;
 
 import static javax.persistence.InheritanceType.JOINED;
 
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity

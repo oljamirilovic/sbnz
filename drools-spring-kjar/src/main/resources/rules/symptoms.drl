@@ -1,4 +1,4 @@
-package sbnz.integracija;
+package rules;
 
 import sbnz.integracija.example.model.Patient;
 import sbnz.integracija.example.model.Appointment;
@@ -11,7 +11,7 @@ rule "Symptoms"
 	salience ((100*$value) / $symptoms.size())
     when
     	$a: Appointment(resolved == false, $diagnosisId: diagnosis.id, $presentSymptoms: appointmentSymptoms)
-    	$d: Diagnosis(id == diagnosisId, illness == null)
+    	$d: Diagnosis(id == $diagnosisId, illness == null)
         $i: Illness($name: name, $symptoms: illnessSymptoms)
         Number($value: intValue >= 3) from accumulate(
         	Symptom($t:this, this memberOf $symptoms) from $presentSymptoms,

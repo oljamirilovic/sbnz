@@ -33,7 +33,14 @@ public class JointMotionRange {
 	@Column(name = "shoulderFlexion")
 	private double shoulderFlexion;
 
-	public int getScoreByFlexions(Gender gender) {
+	@Column(name = "flexionScore")
+	private double flexionScore;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "diagnosis_id", referencedColumnName = "id", nullable = true)
+	private Diagnosis diagnosis;
+
+	public void setScoreByFlexions(Gender gender) {
 		int score = 0;
 		if(gender.equals(Gender.FEMALE)) {
 			if(kneeFlexion < 137 && shoulderFlexion < 168 && elbowFlexion < 148) {
@@ -60,7 +67,7 @@ public class JointMotionRange {
 				score = 3;
 			}
 		}
-		return score;
+		this.flexionScore = score;
 	}
 
 }

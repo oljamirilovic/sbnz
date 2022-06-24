@@ -1,0 +1,37 @@
+package rules;
+
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Illness;
+import sbnz.integracija.example.model.TestResult;
+import sbnz.integracija.example.model.PhysicalActivity;
+import sbnz.integracija.example.model.TestType;
+import sbnz.integracija.example.model.Gender;
+import sbnz.integracija.example.model.Diagnosis;
+import sbnz.integracija.example.model.Appointment;
+
+rule "Test - DEXA"
+	agenda-group "tests"
+    when
+        $a: Appointment(resolved == false, $diagnosisId : diagnosis.id)
+        $d: Diagnosis(id == $diagnosisId, testResult == null, $illnessId: illness.id, $patientId: patient.id)
+        $i: Illness(id == $illnessId, testType == TestType.BONE_DENSITY )
+        $p: Patient(id == $patientId, bmd != 0, $myBmd: bmd, $gender: gender, $age: age )
+    then
+        modify ($d) {  setTestResult(new TestResult($d.calculateScoreForDEXA(($myBmd - $d.calculateRefBmd($gender, $age)) / $d.calculateSD($gender, $age)))); }
+        System.out.println("Calculated DEXA test");
+        System.out.println("Tests finished");
+        System.out.println("///////////////////////////////////////////////////");
+end
+
+rule "Test - NA"
+    agenda-group "tests"
+    when
+        $a: Appointment(resolved == false, $diagnosisId : diagnosis.id)
+        $d: Diagnosis(id == $diagnosisId, testResult == null, $illnessId: illness.id)
+        $i: Illness(id == $illnessId, testType == TestType.NA )
+    then
+        modify ($d) { setTestResult(new TestResult(0)); }
+        System.out.println("No test required");
+        System.out.println("Tests finished");
+        System.out.println("///////////////////////////////////////////////////");
+end

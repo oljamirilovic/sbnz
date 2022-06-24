@@ -1,0 +1,66 @@
+<div id="container-div">
+  <div id="img-div">
+    <img
+      class="mat-elevation-z8"
+      src="assets/images/gon1.jpg"
+      alt="Goniometer image"
+    />
+  </div>
+  <div id="form-holder-div">
+    <h3 class="name">Joint motion range</h3>
+
+    <div class="row" style="font-size: 1rem">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label style="color: #b3b3b3">Elbow flexion</mat-label>
+        <input matInput type="number" min="0" #elbow />
+      </mat-form-field>
+    </div>
+
+    <div class="row" style="font-size: 1rem">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label style="color: #b3b3b3">Shoulder flexion</mat-label>
+        <input matInput type="number" min="0" #shoulder />
+      </mat-form-field>
+    </div>
+
+    <div class="row" style="font-size: 1rem">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label style="color: #b3b3b3">Knee flexion</mat-label>
+        <input matInput type="number" min="0" #knee />
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h2>Or just enter score.</h2>
+
+    <div class="row" style="font-size: 1rem">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label style="color: #b3b3b3">Flexion score</mat-label>
+        <input matInput type="number" min="0" max="3" #score />
+      </mat-form-field>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        mat-flat-button
+        type="button"
+        class="btn btn-danger"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-flat-button
+        type="button"
+        class="btn btn-primary"
+        (click)="finish()"
+        matTooltip="Finish appointment"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="jw-modal-background"></div>

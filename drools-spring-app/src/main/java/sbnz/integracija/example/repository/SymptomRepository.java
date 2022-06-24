@@ -14,4 +14,7 @@ public interface SymptomRepository extends JpaRepository<Symptom, Long> {
     @Query("select d from Symptom d where" +
             "( lower(d.name) like lower(concat('%', ?1,'%')))")
     List<Symptom> findAllByName(String searchTerm);
+
+    @Query("select d from Symptom d")
+    List<Symptom> getAll();
 }

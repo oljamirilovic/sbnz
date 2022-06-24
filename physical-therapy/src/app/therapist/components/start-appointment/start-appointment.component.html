@@ -253,3 +253,10 @@
   Continue
   </button>
 </div>
+
+<app-add-jmr
+[appointmentId]="this.appointmentId"
+*ngIf="this.showJMR"
+(onJMRClose)="this.showJMR = false"
+(onJMRSubmitted)="this.startForwardChaining()"
+></app-add-jmr>

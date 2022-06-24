@@ -10,10 +10,26 @@ import sbnz.integracija.example.model.enums.Gender;
 rule "Test - DEXA"
 	agenda-group "tests"
     when
-    	$tr: TestResult( $patientId: patient.id, $illnessId: illness.id, score == 0)
+        $a: Appointment(resolved == false, $diagnosisId: diagnosis.id)
+        $d: Diagnosis(id == $diagnosisId, illness != null, testResult == null, $illnessId: illness.id, $patientId: patient.id)
         $i: Ilness(id == $illnessId, testType == TestType.BONE_DENSITY )
         $p: Patient(id == $patientId, bmd != 0, $myBmd: bmd, $gender: gender, $age: age )
     then
-        modify ($tr) { calculateScoreForDEXA(($myBmd - calculateRefBmd($gender, $age)) / calculateSD($gender, $age)) }
+        modify ($d) {  setTestResult(new TestResult(calculateScoreForDEXA(($myBmd - calculateRefBmd($gender, $age)) / calculateSD($gender, $age)))); }
         System.out.println("Calculated DEXA test");
+        System.out.println("Tests finished");
+        System.out.println("///////////////////////////////////////////////////");
+end
+
+rule "Test - NA"
+    agenda-group "tests"
+    when
+        $a: Appointment(resolved == false, $diagnosisId: diagnosis.id)
+        $d: Diagnosis(id == $diagnosisId, illness != null, testResult == null, $illnessId: illness.id)
+        $i: Ilness(id == $illnessId, testType == TestType.NA )
+    then
+        modify ($d) { setTestResult(new TestResult(0)); }
+        System.out.println("No test required");
+        System.out.println("Tests finished");
+        System.out.println("///////////////////////////////////////////////////");
 end

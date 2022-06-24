@@ -51,18 +51,7 @@ public class AuthenticationController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity loginUser(@RequestBody LoginDTO login, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
-        }
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        /*if (!(auth instanceof AnonymousAuthenticationToken)) {
-            throw new BadRequestException("Unauthorized!");
-        }*/
-
+    public ResponseEntity loginUser(@RequestBody LoginDTO login) {
         try {
             TokenDTO token = new TokenDTO();
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(login.getUsername());
@@ -79,6 +68,8 @@ public class AuthenticationController {
                         login.getUsername(), login.getPassword()));
             } catch (BadCredentialsException e) {
                 return  new ResponseEntity<>("Your credentials are bad. Please, try again", HttpStatus.BAD_REQUEST);
+            } catch (NotFoundException e){
+                return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
             }
             SecurityContextHolder.getContext().setAuthentication(authentication);
 

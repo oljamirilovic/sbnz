@@ -10,7 +10,6 @@ import java.util.List;
 
 import static javax.persistence.InheritanceType.JOINED;
 
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -32,7 +31,7 @@ public class Patient extends User{
     @Enumerated(EnumType.STRING)
     private PhysicalActivity physicalActivity;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Diagnosis> medicalHistory;
 
     @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)

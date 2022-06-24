@@ -38,9 +38,9 @@ public class Therapy {
 	@JoinColumn(name = "diagnosis_id", referencedColumnName = "id")
     private Diagnosis diagnosis;
 
-    public Therapy(TherapyType type, int mins) {
+    public Therapy(TherapyType type, double mins) {
     	this.startDate = LocalDate.now();
-    	this.minutes = mins;
+    	this.minutes = (int)mins;
     	this.therapyType = type;
     }
 

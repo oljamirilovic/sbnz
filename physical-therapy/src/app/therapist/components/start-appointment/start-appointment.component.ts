@@ -25,6 +25,7 @@ import { SymptomService } from 'src/app/shared/services/symptom-service/symptom.
 export class StartAppointmentComponent implements OnInit {
   @Output() onCancelAppointment = new EventEmitter();
   @Input() appointmentId = 0;
+  showJMR: boolean;
   searchForm: FormGroup;
   searchString: string;
   data1: any[];
@@ -60,6 +61,7 @@ export class StartAppointmentComponent implements OnInit {
       search: [null],
     });
     this.searchString = '';
+    this.showJMR = false;
   }
 
   ngOnInit(): void {
@@ -146,9 +148,37 @@ export class StartAppointmentComponent implements OnInit {
     }
   }
 
-  continue(){}
+  continue(){
+    if(this.data3.length == 0){
+      this.toastr.error("Must add symptoms to Present Symptoms list");
+    }else{
+      this.appointmentService
+      .addSymptomsToAppointment(this.data3, this.appointmentId)
+      .subscribe({
+        next: (response) => {
+          this.showJMR = true;
+        },
+        error: (error) => {
+          this.toastr.error(error.error);
+        },
+      });
+    }
+  }
 
   cancel(){
     this.onCancelAppointment.emit();
+  }
+
+  startForwardChaining(){
+    this.appointmentService
+    .startForwardChaining(this.appointmentId)
+    .subscribe({
+      next: (response) => {
+        this.toastr.success(response);
+      },
+      error: (error) => {
+        this.toastr.error(error.error);
+      },
+    });
   }
 }

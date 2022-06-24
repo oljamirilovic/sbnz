@@ -3,35 +3,35 @@ VALUES (1, 'THERAPIST');
 INSERT INTO role_table (id, name)
 VALUES (2, 'PATIENT');
 
--- LOZINKE SVIH KORISNIKA SU 'test' :)
+-- LOZINKE SVIH KORISNIKA SU '123' :)
 
 ----------------USERS------------------------
 insert into users (username, password, first_name, last_name, role_id)
-values ('therapist1', '$2y$10$t4NZP3qGGdzGakospEzFHOPQngmjvi7dZeZSiwfiNz.1rv/smO0Ce', 'Therapist1', 'Therapistson1', 1);
+values ('therapist1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Therapist1', 'Therapistson1', 1);
 insert into therapist (id) values (1);
 
 insert into users (username, password, first_name, last_name, role_id)
-values ('patient1', '$2y$10$t4NZP3qGGdzGakospEzFHOPQngmjvi7dZeZSiwfiNz.1rv/smO0Ce', 'Peter', 'Peterson', 2);
+values ('patient1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Peter', 'Peterson', 2);
 insert into patient (id, age, gender, bmd, physical_activity) values (2, 60, 'MALE', 1000.0, 'MODERATE');
 
 insert into users (username, password, first_name, last_name, role_id)
-values ('patient2', '$2y$10$t4NZP3qGGdzGakospEzFHOPQngmjvi7dZeZSiwfiNz.1rv/smO0Ce', 'John', 'Johnson', 2);
-insert into patient (id, age, gender, bmd, physical_activity) values (3, 30, 'MALE', 1000.0, 'VERY_ACTIVE');
+values ('patient2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'John', 'Johnson', 2);
+insert into patient (id, age, gender, bmd, physical_activity) values (3, 30, 'MALE', 800.0, 'VERY_ACTIVE');
 
 insert into users (username, password, first_name, last_name, role_id)
-values ('patient3', '$2y$10$t4NZP3qGGdzGakospEzFHOPQngmjvi7dZeZSiwfiNz.1rv/smO0Ce', 'Jane', 'Jensen', 2);
+values ('patient3', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Jane', 'Jensen', 2);
 insert into patient (id, age, gender, bmd, physical_activity) values (4, 40, 'FEMALE', 1000.0, 'MODERATE');
 
 insert into users (username, password, first_name, last_name, role_id)
-values ('patient4', '$2y$10$t4NZP3qGGdzGakospEzFHOPQngmjvi7dZeZSiwfiNz.1rv/smO0Ce', 'Carol', 'Carlson', 2);
+values ('patient4', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Carol', 'Carlson', 2);
 insert into patient (id, age, gender, bmd, physical_activity) values (5, 70, 'FEMALE', 1000.0, 'SEDENTARY');
 
 insert into users (username, password, first_name, last_name, role_id)
-values ('patient5', '$2y$10$t4NZP3qGGdzGakospEzFHOPQngmjvi7dZeZSiwfiNz.1rv/smO0Ce', 'Sarah', 'Samson', 2);
+values ('patient5', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sarah', 'Samson', 2);
 insert into patient (id, age, gender, bmd, physical_activity) values (6, 55, 'FEMALE', 1000.0, 'SEDENTARY');
 
 insert into users (username, password, first_name, last_name, role_id)
-values ('patient6', '$2y$10$t4NZP3qGGdzGakospEzFHOPQngmjvi7dZeZSiwfiNz.1rv/smO0Ce', 'Jack', 'Jackson', 2);
+values ('patient6', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Jack', 'Jackson', 2);
 insert into patient (id, age, gender, bmd, physical_activity) values (7, 25, 'MALE', 1000.0, 'MODERATE');
 
 ----------------FAMILY------------------------
@@ -64,11 +64,11 @@ insert into illnessSymptoms(illness_id, symptom_id) values (1, 9);
 insert into illnessSymptoms(illness_id, symptom_id) values (1, 10);
 
 --osteopenia
-insert into illnessSymptoms(illness_id, symptom_id) values (1, 1);
-insert into illnessSymptoms(illness_id, symptom_id) values (1, 2);
-insert into illnessSymptoms(illness_id, symptom_id) values (1, 4);
-insert into illnessSymptoms(illness_id, symptom_id) values (1, 6);
-insert into illnessSymptoms(illness_id, symptom_id) values (1, 10);
+insert into illnessSymptoms(illness_id, symptom_id) values (2, 1);
+insert into illnessSymptoms(illness_id, symptom_id) values (2, 2);
+insert into illnessSymptoms(illness_id, symptom_id) values (2, 4);
+insert into illnessSymptoms(illness_id, symptom_id) values (2, 6);
+insert into illnessSymptoms(illness_id, symptom_id) values (2, 10);
 
 ---------------TEST_RESULTS------------------------
 insert into test_result(score) values (3);

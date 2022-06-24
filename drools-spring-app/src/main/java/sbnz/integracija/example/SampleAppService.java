@@ -19,8 +19,7 @@ import sbnz.integracija.example.model.Patient;
 import sbnz.integracija.example.model.TestResult;
 import sbnz.integracija.example.model.Therapist;
 import sbnz.integracija.example.model.Therapy;
-import sbnz.integracija.example.model.enums.*;
-
+/*
 @Service
 public class SampleAppService {
 
@@ -91,6 +90,7 @@ public class SampleAppService {
         kSession.insert(i1);
         kSession.insert(i2);
 
-        kSession.fireAllRules();*/
+        kSession.fireAllRules();
 	}
 }
+*/

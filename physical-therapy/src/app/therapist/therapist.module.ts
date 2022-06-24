@@ -13,6 +13,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { ViewOnePatientComponent } from './components/view-one-patient/view-one-patient.component';
 import { ViewAppointmentsComponent } from './components/view-appointments/view-appointments.component';
 import { StartAppointmentComponent } from './components/start-appointment/start-appointment.component';
+import { AddJmrComponent } from './components/add-jmr/add-jmr.component';
 
 
 
@@ -23,7 +24,8 @@ import { StartAppointmentComponent } from './components/start-appointment/start-
     ViewPatientsComponent,
     ViewOnePatientComponent,
     ViewAppointmentsComponent,
-    StartAppointmentComponent
+    StartAppointmentComponent,
+    AddJmrComponent
   ],
   imports: [
     CommonModule,

@@ -21,6 +21,18 @@ public class UserService {
     @Autowired
     private PatientRepository patientRepository;
 
+    public Patient getPatientWithMedicalHistoryById(long id){
+        return patientRepository.getPatientWithMedicalHistoryById(id);
+    }
+
+    public Optional<Patient> getById(long id){
+        return patientRepository.findById(id);
+    }
+
+    public Optional<Patient> getByUsername(String id){
+        return patientRepository.findByUsername(id);
+    }
+
     public PatientDTO getPatient(String username){
         Optional<Patient> p = this.patientRepository.findByUsername(username);
         if(p.isPresent()){

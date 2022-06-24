@@ -8,11 +8,20 @@ import sbnz.integracija.example.repository.SymptomRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SymptomService {
     @Autowired
     private SymptomRepository symptomRepository;
+
+    public List<Symptom> findAll(){
+        return symptomRepository.findAll();
+    }
+
+    public Optional<Symptom> findById(long id){
+        return this.symptomRepository.findById(id);
+    }
 
     public List<SymptomDTO> getAllSymptoms(String searchTerm){
         List<SymptomDTO> ret = new ArrayList<>();
@@ -30,4 +39,5 @@ public class SymptomService {
         }
         return ret;
     }
+
 }

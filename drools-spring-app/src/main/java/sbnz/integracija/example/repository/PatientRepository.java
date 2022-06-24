@@ -18,4 +18,10 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Query("select user from Patient user where user.username =?1")
     Optional<Patient> findByUsername(String username);
+
+    @Query("select user from Patient user left join fetch user.medicalHistory m where user.id =?1")
+    Patient getPatientWithMedicalHistoryById(long id);
+
+    @Query("select user from Patient user where user.id =?1")
+    Optional<Patient> findById(long username);
 }
