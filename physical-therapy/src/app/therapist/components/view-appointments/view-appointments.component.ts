@@ -104,7 +104,6 @@ export class ViewAppointmentsComponent implements OnInit {
   }
 
   startAppointment(id: number){
-    //TODO startAppointment
     this.onStartAppointment.emit(id);
   }
 }

@@ -12,6 +12,7 @@ export const environment = {
   symptom: 'api/symptom',
   illness: 'api/illness',
   family: 'api/family',
+  therapy: 'api/therapy',
 };
 
 /*

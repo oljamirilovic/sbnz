@@ -28,25 +28,23 @@ import { IllnessService } from '../../services/illness-service/illness.service';
 })
 export class ShowFamilyComponent implements OnInit {
   @ViewChild('illness') matSelect!: MatSelect;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @Input() patientUsername!: string;
   @Output() closeFamily = new EventEmitter();
   @Output() showFamilyMember = new EventEmitter();
   currentBcResult: string;
   data: any[];
-  dataSource!: MatTableDataSource<any>;
   displayedColumns: string[] = ['Parent', 'Child', 'View'];
   illnessList: Array<Illness>;
   selectedIllness: string; //name
   searchForm: FormGroup;
-  treeControl = new NestedTreeControl<FamilyTree>(node => node.parents);
+  treeControl = new NestedTreeControl<FamilyTree>((node) => node.parents);
   dataSource1 = new MatTreeNestedDataSource<FamilyTree>();
-  hasChild = (_: number, node: FamilyTree) => !!node.parents && node.parents.length > 0;
+  hasChild = (_: number, node: FamilyTree) =>
+    !!node.parents && node.parents.length > 0;
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private liveAnnouncer: LiveAnnouncer,
     public dialog: MatDialog,
     public illnessService: IllnessService,
     public familyService: FamilyService
@@ -85,25 +83,14 @@ export class ShowFamilyComponent implements OnInit {
   getFamily() {
     this.familyService.getAllByChildUsername(this.patientUsername).subscribe({
       next: (response) => {
-        let tempList : FamilyTree[] =[];
+        let tempList: FamilyTree[] = [];
         tempList.push(response);
         this.dataSource1.data = tempList;
-        /*this.data = response;
-        this.dataSource = new MatTableDataSource<any>(this.data);
-        this.dataSource.sort = this.sort;*/
       },
       error: (error) => {
         this.toastr.error(error.error);
       },
     });
-  }
-
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this.liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this.liveAnnouncer.announce('Sorting cleared');
-    }
   }
 
   close() {

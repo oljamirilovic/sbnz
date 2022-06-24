@@ -16,6 +16,7 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 export class ViewOnePatientComponent implements OnInit {
   @Input() patientUsername = '';
   showFamily: boolean;
+  selectedDiagnosisId: number;
   data: any[];
   dataSource!: MatTableDataSource<any>;
   userData: any[];
@@ -47,6 +48,7 @@ export class ViewOnePatientComponent implements OnInit {
     this.data = [];
     this.userData = [];
     this.showFamily = false;
+    this.selectedDiagnosisId = 0;
   }
 
   ngOnInit(): void {
@@ -95,8 +97,10 @@ export class ViewOnePatientComponent implements OnInit {
   }
 
   viewTherapy(diagnosisId: number){
-    //TODO
+    this.selectedDiagnosisId = diagnosisId;
   }
+
+  //TODO editPatient?
 
   showFamilyMemberClicked(memberUsername: string){
     this.showFamily = false;

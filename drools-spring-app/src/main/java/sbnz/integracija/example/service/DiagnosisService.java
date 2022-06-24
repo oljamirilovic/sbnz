@@ -3,6 +3,8 @@ package sbnz.integracija.example.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sbnz.integracija.example.dto.DiagnosisDTO;
+import sbnz.integracija.example.dto.JmrDTO;
+import sbnz.integracija.example.exception.NotFoundException;
 import sbnz.integracija.example.exception.UserNotFound;
 import sbnz.integracija.example.model.Appointment;
 import sbnz.integracija.example.model.Diagnosis;
@@ -69,5 +71,16 @@ public class DiagnosisService {
             }
         }
         return ret;
+    }
+
+    public String checkNewTherapyAvailable(JmrDTO jmrDTO, long diagnosisId){
+        //TODO query
+        Optional<Diagnosis> diagnosis = findById(diagnosisId);
+        if(!diagnosis.isPresent()){
+            throw new NotFoundException("Diagnosis not found");
+        }
+        List<JointMotionRange> jmrs = jmrRepository.findAllByDiagnosisId(diagnosisId);
+        diagnosis.get().setJointMotionRangeList(jmrs);
+        return "";
     }
 }

@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sbnz.integracija.example.dto.JmrDTO;
+import sbnz.integracija.example.exception.NotFoundException;
 import sbnz.integracija.example.service.DiagnosisService;
 
 import javax.transaction.Transactional;
@@ -27,6 +26,16 @@ public class DiagnosisController {
             return new ResponseEntity<>(diagnosisService.getAllByPatientUsername(username), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>("Error in getAllDiagnosisByPatientUsername", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/checkNewTherapyAvailable/{id}", consumes = "application/json")
+    @PreAuthorize("hasRole('THERAPIST')")
+    public ResponseEntity<?> checkNewTherapyAvailable(@PathVariable("id") long id, @RequestBody JmrDTO jmrDTO){
+        try {
+            return new ResponseEntity<>(diagnosisService.checkNewTherapyAvailable(jmrDTO, id), HttpStatus.OK);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>("Diagnosis not found", HttpStatus.NOT_FOUND);
         }
     }
 }

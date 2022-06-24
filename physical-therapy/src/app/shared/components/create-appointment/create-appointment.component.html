@@ -1,0 +1,55 @@
+<div id="container-div">
+  <div id="img-div">
+    <img
+      class="mat-elevation-z8"
+      src="assets/images/calendar.png"
+      alt="Calendar image"
+    />
+  </div>
+  <div id="form-holder-div">
+    <h2>Select appointment date</h2>
+
+    <div>
+      <form class="example-form" [formGroup]="datePeriodForm">
+        <mat-card-content>
+          <mat-form-field class="date-picker" appearance="fill">
+            <mat-label>Start date:</mat-label>
+            <input
+              matInput
+              [min]="this.today"
+              [matDatepicker]="pickerFrom"
+              formControlName="dateFrom"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerFrom"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+          </mat-form-field>
+        </mat-card-content>
+
+        <div class="modal-footer">
+          <button
+            mat-flat-button
+            type="button"
+            class="btn btn-danger"
+            (click)="close()"
+          >
+            Close
+          </button>
+          <button
+            mat-flat-button
+            type="button"
+            class="btn btn-primary"
+            (click)="create()"
+            [disabled]="datePeriodForm.invalid"
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="jw-modal-background"></div>

@@ -21,6 +21,7 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 })
 export class ViewPatientsComponent implements OnInit {
   @Output() onViewPatientChart = new EventEmitter();
+  selectedPatient: string;
   searchForm: FormGroup;
   searchString: string;
   data: any[];
@@ -33,6 +34,7 @@ export class ViewPatientsComponent implements OnInit {
     'Age',
     'Gender',
     'ViewChart',
+    'NewAppointment'
   ];
 
   constructor(
@@ -48,6 +50,7 @@ export class ViewPatientsComponent implements OnInit {
       search: [null],
     });
     this.searchString = '';
+    this.selectedPatient = '';
   }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 <div style="display: flex">
-  <form class="example-form" style="width: 83%" [formGroup]="searchForm">
+  <form class="example-form" style="width: 100%" [formGroup]="searchForm">
     <mat-form-field class="example-container">
       <span matPrefix> </span>
       <input
@@ -27,19 +27,6 @@
       <mat-icon>search</mat-icon>
     </button>
   </form>
-  <button
-    style="color: #db691d; height: auto; margin-top: -9px; font-size: 18px"
-    type="submit"
-    class="submit-button"
-    id="submit-button"
-    matSuffix
-    mat-icon-button
-    matTooltip="Create new appointment."
-    (click)="newAppointment()"
-  >
-    New
-    <mat-icon>add_circle</mat-icon>
-  </button>
 </div>
 <mat-card>
   <table

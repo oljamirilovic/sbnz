@@ -13,7 +13,6 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { ViewOnePatientComponent } from './components/view-one-patient/view-one-patient.component';
 import { ViewAppointmentsComponent } from './components/view-appointments/view-appointments.component';
 import { StartAppointmentComponent } from './components/start-appointment/start-appointment.component';
-import { AddJmrComponent } from './components/add-jmr/add-jmr.component';
 import { FcResultComponent } from './components/fc-result/fc-result.component';
 
 
@@ -26,7 +25,6 @@ import { FcResultComponent } from './components/fc-result/fc-result.component';
     ViewOnePatientComponent,
     ViewAppointmentsComponent,
     StartAppointmentComponent,
-    AddJmrComponent,
     FcResultComponent
   ],
   imports: [

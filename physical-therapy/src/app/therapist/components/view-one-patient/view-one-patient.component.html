@@ -2,7 +2,7 @@
   <div id="img-div">
     <img
       class="mat-elevation-z8"
-      src="assets/images/user1.png"
+      src="assets/images/user.png"
       alt="User image"
     />
   </div>
@@ -184,3 +184,8 @@
 (closeFamily)="this.showFamily = false"
 (showFamilyMember)="this.showFamilyMemberClicked($event)"
 ></app-show-family>
+<app-view-therapies
+[diagnosisId]="this.selectedDiagnosisId"
+*ngIf="this.selectedDiagnosisId != 0"
+(closeViewTherapies)="this.selectedDiagnosisId = 0"
+></app-view-therapies>

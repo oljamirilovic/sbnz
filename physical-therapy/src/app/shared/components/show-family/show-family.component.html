@@ -3,7 +3,7 @@
     <img
       class="mat-elevation-z8"
       src="assets/images/familytree4.jpg"
-      alt="Goniometer image"
+      alt="FamilyTree image"
     />
   </div>
   <div id="form-holder-div">
@@ -44,12 +44,13 @@
             [treeControl]="treeControl"
             class="example-tree"
           >
-            <!-- This is the tree node template for leaf nodes -->
-            <!-- There is inline padding applied to this node using styles.
-                  This padding value depends on the mat-icon-button width. -->
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
               {{ node.child }}
-              <button mat-icon-button (click)="viewParent(node.child)" matTooltip="View">
+              <button
+                mat-icon-button
+                (click)="viewParent(node.child)"
+                matTooltip="View"
+              >
                 <mat-icon>info</mat-icon>
               </button>
             </mat-tree-node>
@@ -76,7 +77,11 @@
                   </mat-icon>
                 </button>
                 {{ node.child }}
-                <button mat-icon-button (click)="viewParent(node.child)" matTooltip="View">
+                <button
+                  mat-icon-button
+                  (click)="viewParent(node.child)"
+                  matTooltip="View"
+                >
                   <mat-icon>info</mat-icon>
                 </button>
               </div>
@@ -90,62 +95,6 @@
               </div>
             </mat-nested-tree-node>
           </mat-tree>
-          <!--<table
-            mat-table
-            [dataSource]="dataSource"
-            matSort
-            (matSortChange)="announceSortChange($event)"
-            class="mat-elevation-z8"
-          >
-            <ng-container matColumnDef="Parent">
-              <th
-                style="text-align: center"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header="parent"
-                sortActionDescription="Sort by parent"
-              >
-                Parent
-              </th>
-              <td mat-cell *matCellDef="let element" name="parent">
-                {{ element.parent }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="Child">
-              <th
-                style="text-align: center"
-                mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header="child"
-                sortActionDescription="Sort by child"
-              >
-                Child
-              </th>
-              <td mat-cell *matCellDef="let element" name="child">
-                {{ element.child }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="View">
-              <th style="text-align: center" mat-header-cell *matHeaderCellDef>
-                View
-              </th>
-              <td mat-cell *matCellDef="let element">
-                <button
-                  mat-icon-button
-                  name="edit-ordered-item"
-                  (click)="viewParent(element.parent)"
-                  matTooltip="View parent"
-                >
-                  <mat-icon>keyboard_arrow_right</mat-icon>
-                </button>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>-->
         </mat-card>
       </cdk-virtual-scroll-viewport>
     </div>
