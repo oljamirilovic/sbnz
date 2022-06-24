@@ -15,6 +15,7 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 })
 export class ViewOnePatientComponent implements OnInit {
   @Input() patientUsername = '';
+  showFamily: boolean;
   data: any[];
   dataSource!: MatTableDataSource<any>;
   userData: any[];
@@ -31,7 +32,7 @@ export class ViewOnePatientComponent implements OnInit {
   displayedDiagnosisColumns: string[] = [
     'Date',
     'Illness',
-    'ViewAppointment',
+    'Therapist',
     'ViewTherapy',
   ];
 
@@ -45,14 +46,15 @@ export class ViewOnePatientComponent implements OnInit {
   ) {
     this.data = [];
     this.userData = [];
+    this.showFamily = false;
   }
 
   ngOnInit(): void {
-    this.getUserData();
+    this.getUserData(this.patientUsername);
   }
 
-  getUserData() {
-    this.userService.getPatient(this.patientUsername).subscribe({
+  getUserData(username: string) {
+    this.userService.getPatient(username).subscribe({
       next: (response) => {
         this.setUserData(response);
         this.setDiagnosisData(this.patientUsername);
@@ -92,9 +94,14 @@ export class ViewOnePatientComponent implements OnInit {
     }
   }
 
-  viewTherapy(diagnosisId: number){}
+  viewTherapy(diagnosisId: number){
+    //TODO
+  }
 
-  viewAppoinment(diagnosisId: number){}
-
-  viewFamily(){}
+  showFamilyMemberClicked(memberUsername: string){
+    this.showFamily = false;
+    this.patientUsername = memberUsername;
+    this.userData = [];
+    this.getUserData(memberUsername);
+  }
 }

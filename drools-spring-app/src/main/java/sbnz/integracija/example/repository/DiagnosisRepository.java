@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
 
-
+    @Query("select d from Diagnosis d where d.patient.id =?1 ")
+    List<Diagnosis> findDiagnosisByPatientId(long id);
 }

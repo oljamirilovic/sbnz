@@ -43,10 +43,6 @@ public class AppointmentService {
     @Autowired
     private TestResultRepository testResultRepository;
 
-    /*@Autowired
-    @Qualifier(value = "rulesSession")
-    private KieSession rulesSession;*/
-
     @Autowired
     private SymptomRepository symptomRepository;
 

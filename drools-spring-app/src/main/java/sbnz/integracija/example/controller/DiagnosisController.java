@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sbnz.integracija.example.service.DiagnosisService;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/api/diagnosis")
+@Transactional
 public class DiagnosisController {
 
     @Autowired

@@ -5,28 +5,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sbnz.integracija.example.service.SymptomService;
+import sbnz.integracija.example.service.IllnessService;
 
 import javax.transaction.Transactional;
 
 @RestController
-@RequestMapping("/api/symptom")
+@RequestMapping("/api/illness")
 @Transactional
-public class SymptomController {
+public class IllnessController {
 
     @Autowired
-    private SymptomService symptomService;
+    private IllnessService illnessService;
 
-    @GetMapping("/getAllSymptoms/{searchTerm}")
+    @GetMapping("/getAllIllnesses")
     @PreAuthorize("hasRole('THERAPIST')")
-    public ResponseEntity<?> getAllSymptoms(@PathVariable("searchTerm") String searchTerm) {
+    public ResponseEntity<?> getAllIllnesses() {
         try {
-            return new ResponseEntity<>(symptomService.getAllSymptoms(searchTerm), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>("Error in getAllSymptoms", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(illnessService.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error in getAllPatients", HttpStatus.BAD_REQUEST);
         }
     }
 }

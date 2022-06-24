@@ -21,17 +21,24 @@ public class Family {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//   @Position(0)
+//    @ManyToOne(fetch = FetchType.EAGER) // mother and father
+//    @JoinColumn(name = "child_id", referencedColumnName = "id")
     @Position(0)
-    @ManyToOne(fetch = FetchType.EAGER) // mother and father
-    @JoinColumn(name = "child_id", referencedColumnName = "id")
-    private Patient child;
+    private String child; //username
 
+//    @Position(1)
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "parent_id", referencedColumnName = "id")
     @Position(1)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    private Patient parent;
+    private String parent;//username
 
-    public Family(Patient child, Patient parent){
+//    public Family(Patient child, Patient parent){
+//        this.child = child;
+//        this.parent = parent;
+//    }
+
+    public Family(String child, String parent){
         this.child = child;
         this.parent = parent;
     }

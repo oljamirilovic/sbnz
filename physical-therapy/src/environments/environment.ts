@@ -10,6 +10,8 @@ export const environment = {
   diagnosis: 'api/diagnosis',
   appointment: 'api/appointment',
   symptom: 'api/symptom',
+  illness: 'api/illness',
+  family: 'api/family',
 };
 
 /*

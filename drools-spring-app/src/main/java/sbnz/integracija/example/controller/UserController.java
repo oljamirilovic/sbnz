@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import sbnz.integracija.example.exception.NotFoundException;
 import sbnz.integracija.example.service.UserService;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/api/users")
+@Transactional
 public class UserController {
 
     @Autowired

@@ -1,0 +1,38 @@
+package backward;
+
+import java.util.List;
+
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Family;
+import sbnz.integracija.example.model.Illness;
+import sbnz.integracija.example.model.Diagnosis;
+import sbnz.integracija.example.model.FamilyHistory;
+
+
+query patientHadIllness(String patientUsername, String illnessToCheck)
+	Patient(username == patientUsername, $medicalHistory: medicalHistory)
+	$illnesses : List() from collect(
+		Diagnosis($illnessId: illness.id, illness.name == illnessToCheck) from $medicalHistory
+	)
+	eval($illnesses.size() > 0)
+end;
+
+query hasFamilyHistoryOfIllness(String childUsername, String parentUsername, String illnessName)
+    ( Family(childUsername, parentUsername; ) and patientHadIllness( parentUsername, illnessName; ) )
+    or
+    ( Family(parentUsername, z; ) and hasFamilyHistoryOfIllness( parentUsername, z, illnessName; ))
+end;
+
+rule "familyHistory"
+    when
+        $h: FamilyHistory( hasIllness == false, $patientUsername: patientUsername, $searchedIllness: searchedIllness)
+        $p1: Patient(username == $patientUsername)
+        $f: Family(child == $patientUsername, $parentUsername: parent)
+        $p2: Patient(username == $parentUsername)
+
+        hasFamilyHistoryOfIllness($patientUsername, $parentUsername, $searchedIllness; )
+    then
+        modify($h){ setHasIllness(true); }
+        System.out.println( "Illness " + $searchedIllness + " is in " + $parentUsername + " side of the family" );
+        System.out.println("///////////////////////////////////////////////////");
+end;

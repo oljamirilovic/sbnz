@@ -8,9 +8,12 @@ import { UserService } from './services/user-service/user.service';
 import { DiagnosisService } from './services/diagnosis-service/diagnosis.service';
 import { AppointmentService } from './services/appointment-service/appointment.service';
 import { SymptomService } from './services/symptom-service/symptom.service';
+import { ShowFamilyComponent } from './components/show-family/show-family.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ShowFamilyComponent
+  ],
 
   imports: [
     CommonModule,
@@ -23,12 +26,13 @@ import { SymptomService } from './services/symptom-service/symptom.service';
       preventDuplicates: true,
     }),
   ],
-  exports: [],
+  exports: [ShowFamilyComponent],
   providers: [
     UserService,
     DiagnosisService,
     AppointmentService,
     SymptomService,
+    
   ],
 })
 export class SharedModule {}

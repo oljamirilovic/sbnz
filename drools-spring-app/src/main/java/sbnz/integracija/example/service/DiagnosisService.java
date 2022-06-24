@@ -61,6 +61,8 @@ public class DiagnosisService {
         if(!all.isEmpty()) {
             for (Appointment d : all) {
                 if(d.getDiagnosis()!=null) {
+                    Diagnosis dig = d.getDiagnosis();
+                    dig.setAppointment(d);
                     DiagnosisDTO dto = new DiagnosisDTO(d.getDiagnosis());
                     ret.add(dto);
                 }

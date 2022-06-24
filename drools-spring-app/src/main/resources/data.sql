@@ -34,9 +34,20 @@ insert into users (username, password, first_name, last_name, role_id)
 values ('patient6', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Jack', 'Jackson', 2);
 insert into patient (id, age, gender, bmd, physical_activity) values (7, 25, 'MALE', 1000.0, 'MODERATE');
 
+insert into users (username, password, first_name, last_name, role_id)
+values ('patient7', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Josh', 'Johnson', 2);
+insert into patient (id, age, gender, bmd, physical_activity) values (8, 85, 'MALE', 1000.0, 'SEDENTARY');
+
+insert into users (username, password, first_name, last_name, role_id)
+values ('patient8', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Clara', 'Johnson', 2);
+insert into patient (id, age, gender, bmd, physical_activity) values (9, 83, 'FEMALE', 1000.0, 'SEDENTARY');
+
 ----------------FAMILY------------------------
-insert into family(child_id, parent_id) values (3, 2);
-insert into family(child_id, parent_id) values (3, 6);
+insert into family(child, parent) values ('patient2', 'patient1');
+insert into family(child, parent) values ('patient2', 'patient5');
+insert into family(child, parent) values ('patient5', 'patient4');
+insert into family(child, parent) values ('patient1', 'patient7');
+insert into family(child, parent) values ('patient1', 'patient8');
 
 ----------------SYMPTOMS------------------------
 insert into symptom(name) values ('HEIGHT LOSS');
@@ -72,19 +83,25 @@ insert into illnessSymptoms(illness_id, symptom_id) values (2, 10);
 
 ---------------TEST_RESULTS------------------------
 insert into test_result(score) values (3);
+insert into test_result(score) values (2);
 
 ----------------DIAGNOSIS------------------------
 insert into diagnosis(date, illness_id, test_result_id, patient_id)
 values ('2021-10-23', 1, 1, 3);
 insert into diagnosis(date, illness_id, test_result_id, patient_id)
 values ('2022-06-22', null, null, 3);
+insert into diagnosis(date, illness_id, test_result_id, patient_id)
+values ('2021-12-23', 2, 2, 9);
 
 ----------------APPOINTMENTS------------------------
 insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2021-10-23', 1, true);
 insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2022-06-22', 2, false);
+insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2021-12-23', 3, true);
 
 ----------------THERAPY------------------------
 insert into therapy(minutes, therapyType, startDate, endDate, diagnosis_id) values
 (15, 'KINESI_THERAPY', '2021-10-23', '2021-11-07', 1);
 insert into therapy(minutes, therapyType, startDate, endDate, diagnosis_id) values
 (30, 'KINESI_THERAPY', '2021-11-07', '2021-11-21', 1);
+insert into therapy(minutes, therapyType, startDate, endDate, diagnosis_id) values
+(60, 'POOL_THERAPY', '2021-12-23', '2022-01-21', 3);
