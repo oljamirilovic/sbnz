@@ -1,0 +1,53 @@
+<div id="container-div">
+  <div id="img-div">
+    <img
+      class="mat-elevation-z8"
+      src="assets/images/gon1.jpg"
+      alt="Goniometer image"
+    />
+  </div>
+  <div id="form-holder-div">
+    <h2>Appointment result</h2>
+
+    <div class="row" style="height: 200px;" style="font-size: 1rem">
+      <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label style="color: #b3b3b3"
+            >Illness result, Test result and Therapy result</mat-label
+          >
+          <textarea
+            style="color: #b3b3b3;height: 170px;"
+            matInput
+            #notes
+            [value]="this.currentNotes"
+            [disabled]="true"
+          ></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        *ngIf="!this.appointmentResolved"
+        mat-flat-button
+        type="button"
+        class="btn btn-danger"
+        (click)="cancel()"
+        matTooltip="Redo appointment"
+      >
+        Cancel
+      </button>
+      <button
+        mat-flat-button
+        type="button"
+        class="btn btn-primary"
+        (click)="finish()"
+        matTooltip="Finish appointment"
+      >
+        Finish
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="jw-modal-background"></div>

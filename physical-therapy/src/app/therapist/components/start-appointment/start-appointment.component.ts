@@ -24,8 +24,11 @@ import { SymptomService } from 'src/app/shared/services/symptom-service/symptom.
 })
 export class StartAppointmentComponent implements OnInit {
   @Output() onCancelAppointment = new EventEmitter();
+  @Output() onFcFinished = new EventEmitter();
   @Input() appointmentId = 0;
   showJMR: boolean;
+  showFcResult: boolean;
+  fcResultMessage: string;
   searchForm: FormGroup;
   searchString: string;
   data1: any[];
@@ -62,6 +65,8 @@ export class StartAppointmentComponent implements OnInit {
     });
     this.searchString = '';
     this.showJMR = false;
+    this.showFcResult = false;
+    this.fcResultMessage = '';
   }
 
   ngOnInit(): void {
@@ -174,11 +179,17 @@ export class StartAppointmentComponent implements OnInit {
     .startForwardChaining(this.appointmentId)
     .subscribe({
       next: (response) => {
-        this.toastr.success(response);
+        this.fcResultMessage = response;
+        this.showJMR = false;
+        this.showFcResult = true;
       },
       error: (error) => {
         this.toastr.error(error.error);
       },
     });
+  }
+
+  onFcResultFinishClicked(){
+    this.onFcFinished.emit();
   }
 }

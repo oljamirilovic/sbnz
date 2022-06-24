@@ -45,9 +45,16 @@ export class AppointmentService {
     );
   }
 
-  startForwardChaining(id: number): Observable<any> {
+  startForwardChaining(id: number): Observable<string> {
+    return this.http.get(
+      `${environment.baseUrl}/${environment.appointment}/startForwardChaining/${id}`,
+      { responseType: 'text' }
+    );
+  }
+
+  isAppointmentResolved(id: number): Observable<any> {
     return this.http.get<any>(
-      `${environment.baseUrl}/${environment.appointment}/startForwardChaining/${id}`
+      `${environment.baseUrl}/${environment.appointment}/isAppointmentResolved/${id}`
     );
   }
 }

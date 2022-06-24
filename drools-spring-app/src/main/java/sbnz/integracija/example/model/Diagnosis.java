@@ -76,6 +76,19 @@ public class Diagnosis {
 		return j.getFlexionScore();
 	}
 
+	public Therapy getLastTherapy(){
+		if (this.therapyList == null || this.therapyList.isEmpty()) {
+			throw new BadRequestException("therapyList is empty");
+		}
+		Therapy j = this.therapyList.get(0);
+		for (Therapy jmr: this.therapyList) {
+			if(j.getStartDate().isBefore(jmr.getStartDate())){
+				j = jmr;
+			}
+		}
+		return j;
+	}
+
 	public int calculateScoreForDEXA(double tScore) {
 		if(tScore >= -1) {
 			return 1;

@@ -130,6 +130,7 @@ public class AppointmentService {
     }
 
     public String startForwardChaining(long appointmentId){
+        String message = "";
         Optional<Appointment> appointment = Optional.ofNullable(appointmentRepository.findById(appointmentId));
         if(!appointment.isPresent()){
             throw new NotFoundException("Appointment not found");
@@ -169,27 +170,47 @@ public class AppointmentService {
         rulesSession.insert(appointment.get());
         rulesSession.insert(diagnosis.get());
         rulesSession.fireAllRules();
+
         if(diagnosis.get().getIllness() == null){
-            return "No illness has been detected.";
-        }
-        rulesSession.getAgenda().getAgendaGroup("tests").setFocus();
-        rulesSession.insert(patient.get());
-        rulesSession.fireAllRules();
-        if(diagnosis.get().getTestResult() == null){
-            return "Tests haven't been done.";
-        }
-        testResultRepository.save(diagnosis.get().getTestResult());
+            message += "No illness has been detected.\n";
+            return message;
+        }else {
+            message += "Illness " + diagnosis.get().getIllness().getName() + " has been detected.\n";
 
-        rulesSession.getAgenda().getAgendaGroup("therapy").setFocus();
-        rulesSession.insert(diagnosis.get().getTestResult());
-        rulesSession.fireAllRules();
-        if(!appointment.get().isResolved()){
-            return "Appointment not resolved";
-        }
-        diagnosisService.save(diagnosis.get());
-        appointmentRepository.save(appointment.get());
+            rulesSession.getAgenda().getAgendaGroup("tests").setFocus();
+            rulesSession.insert(patient.get());
+            rulesSession.fireAllRules();
+            if (diagnosis.get().getTestResult() == null) {
+                message += "Tests haven't been done.";
+                return message;
+            }
+            else {
+                message += "Test for " + diagnosis.get().getIllness().getTestType() + " has been done.\n";
+                testResultRepository.save(diagnosis.get().getTestResult());
 
-        return "Appointment finished!!!!";
+                rulesSession.getAgenda().getAgendaGroup("therapy").setFocus();
+                rulesSession.insert(diagnosis.get().getTestResult());
+                rulesSession.fireAllRules();
+                if (!appointment.get().isResolved()) {
+                    message += "Appointment not resolved";
+                    return message;
+                }
+                else {
+                    int mins = diagnosis.get().getLastTherapy().getMinutes();
+                    TherapyType type = diagnosis.get().getLastTherapy().getTherapyType();
+                    message += "Appointment resolved with therapy: " + type + " " + mins + "minutes .\n";
+
+                    for (Therapy t : diagnosis.get().getTherapyList()) {
+                        therapyRepository.save(t);
+                    }
+
+                    diagnosisService.save(diagnosis.get());
+                    appointmentRepository.save(appointment.get());
+
+                    return message;
+                }
+            }
+        }
     }
 
     public KieSession setup(KieSession kieSession){
@@ -203,5 +224,13 @@ public class AppointmentService {
             kieSession.insert(illness);
         }
         return kieSession;
+    }
+
+    public boolean isAppointmentResolved(long appointmentId){
+        Optional<Appointment> appointment = Optional.ofNullable(appointmentRepository.findById(appointmentId));
+        if(!appointment.isPresent()){
+            throw new NotFoundException("Appointment not found");
+        }
+        return appointment.get().isResolved();
     }
 }

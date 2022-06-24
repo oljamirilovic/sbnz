@@ -260,3 +260,10 @@
 (onJMRClose)="this.showJMR = false"
 (onJMRSubmitted)="this.startForwardChaining()"
 ></app-add-jmr>
+<app-fc-result
+[currentNotes]="this.fcResultMessage"
+[appointmentId]="this.appointmentId"
+*ngIf="this.showFcResult"
+(onFcResultCancel)="this.showFcResult = false"
+(onFcResultFinish)="this.onFcResultFinishClicked()"
+></app-fc-result>

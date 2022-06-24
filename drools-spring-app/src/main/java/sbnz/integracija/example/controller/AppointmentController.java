@@ -77,4 +77,14 @@ public class AppointmentController {
             return new ResponseEntity<>("Patient not found", HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/isAppointmentResolved/{id}")
+    @PreAuthorize("hasRole('THERAPIST')")
+    public ResponseEntity<?> isAppointmentResolved(@PathVariable("id") long id) {
+        try {
+            return new ResponseEntity<>(appointmentService.isAppointmentResolved(id), HttpStatus.OK);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>("Appointment not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }

@@ -95,6 +95,7 @@
         class="registar"
         *ngIf="this.activeView === '4'"
         (onCancelAppointment)="this.activeView = '3'"
+        (onFcFinished)="this.activeView = '3'"
       ></app-start-appointment>
     </div>
   </mat-sidenav-content>
