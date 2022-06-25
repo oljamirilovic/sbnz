@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
+import { UserWithToken } from '../../models/user-with-token';
+import { AppointmentService } from '../../services/appointment-service/appointment.service';
 
 @Component({
   selector: 'app-create-appointment',
@@ -12,7 +16,11 @@ export class CreateAppointmentComponent implements OnInit {
   datePeriodForm: FormGroup;
   today: Date = new Date();
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private apService: AppointmentService
+  ) {
     this.datePeriodForm = this.fb.group({
       dateFrom: [null, Validators.required],
     });
@@ -20,12 +28,29 @@ export class CreateAppointmentComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  close(){
+  close() {
     this.closeCreateAppointment.emit();
   }
 
-  create(){
-    //TODO createAppointment
-    //var fromDate = this.datePeriodForm.value.dateFrom;
+  create() {
+    const temp = new BehaviorSubject<UserWithToken>(
+      JSON.parse(localStorage.getItem('currentUser')!)
+    );
+    var therapist = temp.value.username;
+    var fromDate = this.datePeriodForm.value.dateFrom;
+    let newApp = {
+      date: fromDate,
+      patientUsername: this.patientUsername,
+      therapistUsername: therapist,
+    };
+    this.apService.newAppointment(newApp).subscribe({
+      next: (response) => {
+        this.toastr.success(response);
+        this.closeCreateAppointment.emit();
+      },
+      error: (error) => {
+        this.toastr.error(error.error);
+      },
+    });
   }
 }

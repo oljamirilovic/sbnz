@@ -3,6 +3,7 @@ package sbnz.integracija.example.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import sbnz.integracija.example.dto.NewPatientDTO;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -55,6 +56,15 @@ public class Patient extends User{
         this.gender = g;
         this.physicalActivity = pa;
         this.bmd = 0;
+        this.medicalHistory = new ArrayList<Diagnosis>();
+    }
+
+    public Patient(NewPatientDTO dto){
+        super(dto.getUsername(), dto.getPassword(), dto.getFirstName(), dto.getLastName());
+        this.age = dto.getAge();
+        this.gender = Gender.valueOf(dto.getGender());
+        this.physicalActivity = PhysicalActivity.valueOf(dto.getPa());
+        this.bmd = dto.getBmd();
         this.medicalHistory = new ArrayList<Diagnosis>();
     }
 

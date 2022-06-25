@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Appointment } from '../../models/appointment';
 import { Jmr } from '../../models/jmr';
+import { NewAppointment } from '../../models/newAppointment';
 import { Patient } from '../../models/patient';
 import { Symptom } from '../../models/symptom';
 
@@ -55,6 +56,15 @@ export class AppointmentService {
   isAppointmentResolved(id: number): Observable<any> {
     return this.http.get<any>(
       `${environment.baseUrl}/${environment.appointment}/isAppointmentResolved/${id}`
+    );
+  }
+
+  newAppointment(appointment: NewAppointment): Observable<any>{
+    return this.http.post(
+      `${environment.baseUrl}/${environment.appointment}/newAppointment`, appointment, {
+        headers: this.headers,
+        responseType: 'text'
+      }
     );
   }
 }

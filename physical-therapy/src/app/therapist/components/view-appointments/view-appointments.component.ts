@@ -95,10 +95,6 @@ export class ViewAppointmentsComponent implements OnInit {
     }
   }
 
-  newAppointment(){
-    //TODO newAppointment
-  }
-
   viewDetails(id: number){
     //TODO viewDetails
   }

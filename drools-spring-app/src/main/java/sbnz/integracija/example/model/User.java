@@ -52,6 +52,12 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
+    public User(String username, String password, String firstName, String lastName){
+        this.firstName = firstName;
+        this.username = username;
+        this.lastName = lastName;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<Authority> authorities = new ArrayList<Authority>();

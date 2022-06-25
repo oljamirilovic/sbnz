@@ -102,16 +102,20 @@ export class ShowFamilyComponent implements OnInit {
   }
 
   search() {
-    this.familyService
-      .startBackwardChaining(this.patientUsername, this.selectedIllness)
-      .subscribe({
-        next: (response) => {
-          this.currentBcResult = response;
-          //this.toastr.success(response);
-        },
-        error: (error) => {
-          this.toastr.error(error.error);
-        },
-      });
+    if (this.selectedIllness != null && this.selectedIllness != '') {
+      this.familyService
+        .startBackwardChaining(this.patientUsername, this.selectedIllness)
+        .subscribe({
+          next: (response) => {
+            this.currentBcResult = response;
+            //this.toastr.success(response);
+          },
+          error: (error) => {
+            this.toastr.error(error.error);
+          },
+        });
+    } else {
+      this.toastr.error('Select illness to search.');
+    }
   }
 }

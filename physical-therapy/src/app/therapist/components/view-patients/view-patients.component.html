@@ -35,7 +35,7 @@
     matSuffix
     mat-icon-button
     matTooltip="Add new patient."
-    (click)="addPatient()"
+    (click)="createNewPatient = true"
   >
     Add
     <mat-icon>add_circle</mat-icon>
@@ -167,3 +167,7 @@
   *ngIf="this.selectedPatient != ''"
   (closeCreateAppointment)="this.selectedPatient = ''"
 ></app-create-appointment>
+<app-new-patient
+*ngIf="this.createNewPatient"
+(closeNewPatient)="this.newPatientAdded($event)"
+></app-new-patient>

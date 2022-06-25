@@ -107,7 +107,11 @@
     </table>
   </mat-card>
 </div>
-
+<cdk-virtual-scroll-viewport
+  appendOnly
+  itemSize="10"
+  class="example-viewport custom-scroll-bar"
+>
 <mat-card>
   <table
     mat-table
@@ -178,6 +182,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedDiagnosisColumns"></tr>
   </table>
 </mat-card>
+</cdk-virtual-scroll-viewport>
 <app-show-family
 [patientUsername]="this.patientUsername"
 *ngIf="this.showFamily"

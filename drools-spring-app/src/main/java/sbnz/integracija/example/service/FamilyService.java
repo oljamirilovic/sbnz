@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sbnz.integracija.example.dto.FamilyTreeDTO;
 import sbnz.integracija.example.exception.NotFoundException;
-import sbnz.integracija.example.model.Diagnosis;
-import sbnz.integracija.example.model.Family;
-import sbnz.integracija.example.model.FamilyHistory;
-import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.*;
 import sbnz.integracija.example.repository.DiagnosisRepository;
 import sbnz.integracija.example.repository.FamilyRepository;
+import sbnz.integracija.example.repository.IllnessRepository;
 import sbnz.integracija.example.repository.PatientRepository;
 
 import java.util.ArrayList;
@@ -30,6 +28,9 @@ public class FamilyService {
 
     @Autowired
     private DiagnosisRepository diagnosisRepository;
+
+    @Autowired
+    private IllnessRepository illnessRepository;
 
     @Autowired
     public FamilyService(KieContainer kieContainer) {
@@ -104,6 +105,11 @@ public class FamilyService {
         List<Diagnosis> diagnoses = diagnosisRepository.findAll();
         for (Diagnosis diagnosis : diagnoses) {
             kieSession.insert(diagnosis);
+        }
+
+        List<Illness> illnesses = illnessRepository.findAll();
+        for (Illness illness : illnesses) {
+            kieSession.insert(illness);
         }
 
         return kieSession;

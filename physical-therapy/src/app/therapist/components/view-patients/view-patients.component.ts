@@ -21,6 +21,7 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 })
 export class ViewPatientsComponent implements OnInit {
   @Output() onViewPatientChart = new EventEmitter();
+  createNewPatient: boolean;
   selectedPatient: string;
   searchForm: FormGroup;
   searchString: string;
@@ -34,7 +35,7 @@ export class ViewPatientsComponent implements OnInit {
     'Age',
     'Gender',
     'ViewChart',
-    'NewAppointment'
+    'NewAppointment',
   ];
 
   constructor(
@@ -51,6 +52,7 @@ export class ViewPatientsComponent implements OnInit {
     });
     this.searchString = '';
     this.selectedPatient = '';
+    this.createNewPatient = false;
   }
 
   ngOnInit(): void {
@@ -101,7 +103,8 @@ export class ViewPatientsComponent implements OnInit {
     this.onViewPatientChart.emit(username);
   }
 
-  addPatient() {
-    //TODO addPatient
+  newPatientAdded(item:any) {
+    this.createNewPatient = false;
+    this.getData();
   }
 }

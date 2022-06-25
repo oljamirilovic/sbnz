@@ -1,5 +1,6 @@
 package backward;
 
+import java.lang.Integer;
 import java.util.List;
 
 import sbnz.integracija.example.model.Patient;
@@ -11,8 +12,10 @@ import sbnz.integracija.example.model.FamilyHistory;
 
 query patientHadIllness(String patientUsername, String illnessToCheck)
 	Patient(username == patientUsername, $medicalHistory: medicalHistory)
-	$illnesses : List() from collect(
-		Diagnosis($illnessId: illness.id, illness.name == illnessToCheck) from $medicalHistory
+	$illnesses : List() from accumulate(
+		Diagnosis($d: id, $illness: illness, $name: illness.name ) from $medicalHistory and
+		Illness(this == $illness, name == illnessToCheck),
+		collectList($d)
 	)
 	eval($illnesses.size() > 0)
 end;

@@ -69,3 +69,15 @@ img {
 #img-div {
     text-align: center;
 }
+
+.custom-scroll-bar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scroll-bar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.26);
+}
+
+.example-viewport {
+  height: 50%;
+}

@@ -4,10 +4,7 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sbnz.integracija.example.dto.AppointmentDTO;
-import sbnz.integracija.example.dto.JmrDTO;
-import sbnz.integracija.example.dto.PatientDTO;
-import sbnz.integracija.example.dto.SymptomDTO;
+import sbnz.integracija.example.dto.*;
 import sbnz.integracija.example.exception.BadRequestException;
 import sbnz.integracija.example.exception.NotFoundException;
 import sbnz.integracija.example.exception.UserNotFound;
@@ -200,6 +197,7 @@ public class AppointmentService {
                         therapyRepository.save(t);
                     }
 
+                    diagnosis.get().setDate(LocalDate.now());
                     diagnosisService.save(diagnosis.get());
                     appointmentRepository.save(appointment.get());
 
@@ -228,5 +226,26 @@ public class AppointmentService {
             throw new NotFoundException("Appointment not found");
         }
         return appointment.get().isResolved();
+    }
+
+    public String newAppointment(NewAppointmentDTO newAppointmentDTO){
+        Optional<Patient> patient = userService.getByUsername(newAppointmentDTO.getPatientUsername());
+        if(!patient.isPresent()){
+            throw new UserNotFound("Patient not found");
+        }
+        Optional<Therapist>therapist = userService.getTherapistByUsername(newAppointmentDTO.getTherapistUsername());
+        if(!therapist.isPresent()){
+            throw new NotFoundException("Therapist not found");
+        }
+        Diagnosis diagnosis = new Diagnosis();
+        diagnosis.setPatient(patient.get());
+        diagnosisService.save(diagnosis);
+        Appointment appointment = new Appointment();
+        appointment.setTherapist(therapist.get());
+        appointment.setDate(newAppointmentDTO.getDate());
+        appointment.setDiagnosis(diagnosis);
+        appointment.setResolved(false);
+        appointmentRepository.save(appointment);
+        return "New Appointment created!";
     }
 }

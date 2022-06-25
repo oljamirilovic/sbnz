@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import sbnz.integracija.example.dto.JmrDTO;
+import sbnz.integracija.example.dto.NewAppointmentDTO;
 import sbnz.integracija.example.dto.SymptomDTO;
 import sbnz.integracija.example.exception.BadRequestException;
 import sbnz.integracija.example.exception.NotFoundException;
@@ -85,6 +86,18 @@ public class AppointmentController {
             return new ResponseEntity<>(appointmentService.isAppointmentResolved(id), HttpStatus.OK);
         }catch (NotFoundException e){
             return new ResponseEntity<>("Appointment not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping(value = "/newAppointment", consumes = "application/json")
+    @PreAuthorize("hasRole('THERAPIST')")
+    public ResponseEntity<?> newAppointment(@RequestBody NewAppointmentDTO newAppointmentDTO){
+        try {
+            return new ResponseEntity<>(appointmentService.newAppointment(newAppointmentDTO), HttpStatus.OK);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>("Therapist not found", HttpStatus.NOT_FOUND);
+        }catch (UserNotFound e){
+            return new ResponseEntity<>("Patient not found", HttpStatus.NOT_FOUND);
         }
     }
 }
