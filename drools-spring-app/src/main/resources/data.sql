@@ -99,9 +99,9 @@ insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '
 insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2021-12-23', 3, true);
 
 ----------------THERAPY------------------------
-insert into therapy(minutes, therapyType, startDate, endDate, diagnosis_id) values
-(15, 'KINESI_THERAPY', '2021-10-23', '2021-11-07', 1);
-insert into therapy(minutes, therapyType, startDate, endDate, diagnosis_id) values
-(30, 'KINESI_THERAPY', '2021-11-07', '2021-11-21', 1);
-insert into therapy(minutes, therapyType, startDate, endDate, diagnosis_id) values
-(60, 'POOL_THERAPY', '2021-12-23', '2022-01-21', 3);
+insert into therapy(minutes, therapyType, startDate, endDate, resolved, diagnosis_id) values
+(15, 'KINESI_THERAPY', '2021-10-23', '2021-11-07', true, 1);
+insert into therapy(minutes, therapyType, startDate, endDate, resolved, diagnosis_id) values
+(30, 'KINESI_THERAPY', '2021-11-07', '2021-11-21', true, 1);
+insert into therapy(minutes, therapyType, startDate, endDate, resolved, diagnosis_id) values
+(60, 'POOL_THERAPY', '2022-06-11', null, false, 3);

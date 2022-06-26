@@ -40,10 +40,10 @@ export class AddJmrComponent implements OnInit {
 
   finish() {
     if (
-      (this.score.nativeElement.value != 0 &&
+      (this.elbow.nativeElement.value != 0 &&
         this.knee.nativeElement.value != 0 &&
         this.shoulder.nativeElement.value != 0) ||
-      this.elbow.nativeElement.value != 0
+      this.score.nativeElement.value != 0
     ) {
       const jmr = {
         elbowFlexion: this.elbow.nativeElement.value,

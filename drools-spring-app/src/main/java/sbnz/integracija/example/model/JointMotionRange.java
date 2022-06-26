@@ -40,6 +40,19 @@ public class JointMotionRange {
 	@JoinColumn(name = "diagnosis_id", referencedColumnName = "id", nullable = true)
 	private Diagnosis diagnosis;
 
+	public JointMotionRange(double flexionScore, LocalDate date, Diagnosis diagnosis){
+		this.flexionScore = flexionScore;
+		this.date = date;
+		this.diagnosis = diagnosis;
+	}
+
+	public JointMotionRange(double elbowFlexion, double kneeFlexion, double shoulderFlexion){
+		this.elbowFlexion = elbowFlexion;
+		this.kneeFlexion = kneeFlexion;
+		this.shoulderFlexion = shoulderFlexion;
+		this.date = LocalDate.now();
+	}
+
 	public void setScoreByFlexions(Gender gender) {
 		int score = 0;
 		if(gender.equals(Gender.FEMALE)) {

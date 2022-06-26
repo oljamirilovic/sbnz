@@ -15,6 +15,7 @@ import { ViewAppointmentsComponent } from './components/view-appointments/view-a
 import { StartAppointmentComponent } from './components/start-appointment/start-appointment.component';
 import { FcResultComponent } from './components/fc-result/fc-result.component';
 import { NewPatientComponent } from './components/new-patient/new-patient.component';
+import { FilterPatientsComponent } from './components/filter-patients/filter-patients.component';
 
 
 
@@ -27,7 +28,8 @@ import { NewPatientComponent } from './components/new-patient/new-patient.compon
     ViewAppointmentsComponent,
     StartAppointmentComponent,
     FcResultComponent,
-    NewPatientComponent
+    NewPatientComponent,
+    FilterPatientsComponent
   ],
   imports: [
     CommonModule,

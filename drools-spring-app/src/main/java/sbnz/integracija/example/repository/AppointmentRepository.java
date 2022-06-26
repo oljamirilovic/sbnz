@@ -31,4 +31,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query("select d.diagnosis from Appointment d left join fetch d.diagnosis.illness i where d.diagnosis.patient.id =?1 and d.resolved = true")
     List<Diagnosis> findDiagnosisByPatientIdAndResolved(long id);
 
+    @Query("select d from Appointment d left join fetch d.diagnosis i where i.id =?1")
+    Appointment findByDiagnosisId(long id);
+
+    @Query("select d from Appointment d left join fetch d.appointmentSymptoms")
+    List<Appointment> findAllWithSymptoms();
 }

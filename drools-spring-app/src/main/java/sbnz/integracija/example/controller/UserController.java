@@ -10,6 +10,8 @@ import sbnz.integracija.example.dto.NewPatientDTO;
 import sbnz.integracija.example.exception.ForbiddenException;
 import sbnz.integracija.example.exception.NotFoundException;
 import sbnz.integracija.example.exception.UserNotFound;
+import sbnz.integracija.example.model.TherapyType;
+import sbnz.integracija.example.service.PatientService;
 import sbnz.integracija.example.service.UserService;
 
 import javax.transaction.Transactional;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PatientService patientService;
 
     @GetMapping("/getAllPatients/{searchTerm}")
     @PreAuthorize("hasRole('THERAPIST')")
@@ -53,6 +58,37 @@ public class UserController {
             return new ResponseEntity<>("Username already exists", HttpStatus.FORBIDDEN);
         }catch (NotFoundException e){
             return new ResponseEntity<>("Parent not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/resolvableTherapies")
+    @PreAuthorize("hasRole('THERAPIST')")
+    public ResponseEntity<?> resolvableTherapies() {
+        try {
+            return new ResponseEntity<>(patientService.getAllPatientsWithTherapiesWithMinDaysPast(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Error in resolvableTherapies", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/potentialAbuse")
+    @PreAuthorize("hasRole('THERAPIST')")
+    public ResponseEntity<?> potentialAbuse() {
+        try {
+            return new ResponseEntity<>(patientService.getAllPotentiallyAbusedPatients(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Error in potentialAbuse", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/resolvableTherapiesByType/{type}")
+    @PreAuthorize("hasRole('THERAPIST')")
+    public ResponseEntity<?> resolvableTherapiesByType(@PathVariable("type") String type) {
+        try {
+            return new ResponseEntity<>(patientService.
+                    getAllPatientsWithTherapiesWithMinDaysPastByTherapyType(TherapyType.valueOf(type)), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Error in resolvableTherapiesByType", HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -8,4 +8,12 @@
 	<kbase name="backward" eventProcessingMode="stream" packages="backward">
 		<ksession name="rules_bc"/>
 	</kbase>
+
+	<kbase name="reports" eventProcessingMode="stream" packages="reports">
+		<ksession name="rules_reports"/>
+	</kbase>
+
+	<kbase name="endtherapy" eventProcessingMode="stream" packages="endtherapy">
+		<ksession name="rules_endtherapy"/>
+	</kbase>
 </kmodule>

@@ -16,6 +16,7 @@ public class TherapyDto {
     private String endDate;
     private String type;
     private int minutes;
+    private boolean resolved;
 
     public TherapyDto(Therapy therapy){
         this.id = therapy.getId();
@@ -23,6 +24,7 @@ public class TherapyDto {
         this.type = therapy.getTherapyType().name();
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         this.startDate = formatters.format(therapy.getStartDate());
+        this.resolved = therapy.isResolved();
         if(therapy.getEndDate() != null){
             this.endDate = formatters.format(therapy.getEndDate());
         }else{

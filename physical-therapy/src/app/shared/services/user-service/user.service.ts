@@ -32,4 +32,22 @@ export class UserService {
       }
     );
   }
+
+  getAllPatientsWithResolvableTherapies(): Observable<Array<Patient>> {
+    return this.http.get<Array<Patient>>(
+      `${environment.baseUrl}/${environment.users}/resolvableTherapies`
+    );
+  }
+
+  getAllPatientsWithPotentialAbuse(): Observable<Array<Patient>> {
+    return this.http.get<Array<Patient>>(
+      `${environment.baseUrl}/${environment.users}/potentialAbuse`
+    );
+  }
+
+  getAllPatientsWithResolvableTherapiesByType(type: string): Observable<Array<Patient>> {
+    return this.http.get<Array<Patient>>(
+      `${environment.baseUrl}/${environment.users}/resolvableTherapiesByType/${type}`
+    );
+  }
 }

@@ -1,0 +1,62 @@
+package queries;
+
+import java.lang.Math;
+import java.util.List;
+import java.time.LocalDate;
+
+import sbnz.integracija.example.model.Patient;
+import sbnz.integracija.example.model.Diagnosis;
+import sbnz.integracija.example.model.TherapyType;
+import sbnz.integracija.example.model.Therapy;
+import sbnz.integracija.example.model.Illness;
+import sbnz.integracija.example.model.Appointment;
+import sbnz.integracija.example.model.Symptom;
+import sbnz.integracija.example.model.utils.DateUtil;
+
+query "getAllPatientsWithTherapiesWithMinDaysPast"
+    accumulate(
+        Patient($patient: this,  $medicalHistory: medicalHistory ) and
+        Number(intValue > 0) from accumulate(
+            Diagnosis($d: this, $therapyList: therapyList) from $medicalHistory and
+            Number(intValue > 0) from accumulate(
+                Therapy($t: this, resolved == false, DateUtil.getDaysElapsed(startDate) >= 14) from $therapyList,
+                count($t)
+            ),
+            count($d)
+        ),
+        $patients: collectList($patient)
+    )
+end
+
+query "getAllPatientsWithTherapiesWithMinDaysPastByTherapyType"(TherapyType type)
+    accumulate(
+        Patient($patient: this,  $medicalHistory: medicalHistory ) and
+        Number(intValue > 0) from accumulate(
+            Diagnosis($d: this, $therapyList: therapyList) from $medicalHistory and
+            Number(intValue > 0) from accumulate(
+                Therapy($t: this, resolved == false, therapyType == type,
+                 DateUtil.getDaysElapsed(startDate) >= 14) from $therapyList,
+                count($t)
+            ),
+            count($d)
+        ),
+        $patients: collectList($patient)
+    )
+end
+
+
+query "getAllPotentiallyAbusedPatients"
+    accumulate(
+        Patient($patient: this,  $medicalHistory: medicalHistory ) and
+        Number(intValue > 6) from accumulate(
+            Diagnosis($d: this, $appointmentId: appointment.id) from $medicalHistory and
+            Appointment(id == $appointmentId, $symptomsReported: appointmentSymptoms, $injuryDate: date, $injuryDate.isAfter(LocalDate.now().minusMonths(6))) and
+            Number(intValue > 0) from accumulate(
+                 Symptom($s:this, name == "BONE FRACTURE") from $symptomsReported,
+                 count($s)
+             ),
+            count($d)
+        ),
+        $patients: collectList($patient)
+    )
+end

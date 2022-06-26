@@ -84,7 +84,7 @@
               <th mat-header-cell *matHeaderCellDef>End</th>
               <td mat-cell *matCellDef="let element">
                 <button
-                  *ngIf="element.endDate != ''"
+                  *ngIf="!element.resolved"
                   mat-icon-button
                   name="edit-ordered-item"
                   (click)="endTherapy(element.id)"

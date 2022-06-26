@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,6 +33,9 @@ public class Therapy {
 	@Column(name = "endDate")
     private LocalDate endDate;
 
+	@Column(name = "resolved")
+	private boolean resolved;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "diagnosis_id", referencedColumnName = "id")
     private Diagnosis diagnosis;
@@ -44,4 +46,8 @@ public class Therapy {
     	this.therapyType = type;
     }
 
+    public void endTherapy(){
+    	this.endDate = LocalDate.now();
+    	this.resolved = true;
+	}
 }

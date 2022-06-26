@@ -1,5 +1,5 @@
 <div style="display: flex">
-  <form class="example-form" style="width: 83%" [formGroup]="searchForm">
+  <form class="example-form" style="width: 50%" [formGroup]="searchForm">
     <mat-form-field class="example-container">
       <span matPrefix> </span>
       <input
@@ -27,6 +27,19 @@
       <mat-icon>search</mat-icon>
     </button>
   </form>
+  <button
+    style="color: #db691d; height: auto; margin-top: -9px; font-size: 18px;margin-right: 30%;"
+    type="submit"
+    class="submit-button"
+    id="submit-button"
+    matSuffix
+    mat-icon-button
+    matTooltip="Filter patients"
+    (click)="this.showFilter = true"
+  >
+    Filter
+    <mat-icon>list</mat-icon>
+  </button>
   <button
     style="color: #db691d; height: auto; margin-top: -9px; font-size: 18px"
     type="submit"
@@ -168,6 +181,16 @@
   (closeCreateAppointment)="this.selectedPatient = ''"
 ></app-create-appointment>
 <app-new-patient
-*ngIf="this.createNewPatient"
-(closeNewPatient)="this.newPatientAdded($event)"
+  *ngIf="this.createNewPatient"
+  (closeNewPatient)="this.newPatientAdded($event)"
 ></app-new-patient>
+<app-filter-patients
+  *ngIf="this.showFilter"
+  (closeFilter)="this.showFilter = false"
+  (clearFilter)="this.clearFilter($event)"
+  (resolvableTherapiesFilter)="this.resolvableTherapiesFilter($event)"
+  (potentialAbuseFilter)="this.potentialAbuseFilter($event)"
+  (resolvableTherapiesByTypeFilter)="
+    this.resolvableTherapiesByTypeFilter($event)
+  "
+></app-filter-patients>

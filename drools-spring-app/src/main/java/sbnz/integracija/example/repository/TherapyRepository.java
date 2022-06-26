@@ -12,4 +12,5 @@ public interface TherapyRepository extends JpaRepository<Therapy, Long> {
 
     @Query("select d from Therapy d where d.diagnosis.id =?1")
     List<Therapy> findAllByDiagnosisId(long id);
+
 }

@@ -46,7 +46,7 @@ public class AppointmentService {
     @Autowired
     private IllnessRepository illnessRepository;
 
-    private final KieContainer kieContainer;
+   private final KieContainer kieContainer;
 
     @Autowired
     public AppointmentService(KieContainer kieContainer) {
@@ -166,6 +166,7 @@ public class AppointmentService {
 
         if(diagnosis.get().getIllness() == null){
             message += "No illness has been detected.\n";
+            rulesSession.dispose();
             return message;
         }else {
             message += "Illness " + diagnosis.get().getIllness().getName() + " has been detected.\n";
@@ -175,6 +176,7 @@ public class AppointmentService {
             rulesSession.fireAllRules();
             if (diagnosis.get().getTestResult() == null) {
                 message += "Tests haven't been done.";
+                rulesSession.dispose();
                 return message;
             }
             else {
@@ -185,7 +187,8 @@ public class AppointmentService {
                 rulesSession.insert(diagnosis.get().getTestResult());
                 rulesSession.fireAllRules();
                 if (!appointment.get().isResolved()) {
-                    message += "Appointment not resolved";
+                    message += "Appointment not resolved.\n No therapy recommended.";
+                    rulesSession.dispose();
                     return message;
                 }
                 else {
@@ -193,14 +196,15 @@ public class AppointmentService {
                     TherapyType type = diagnosis.get().getLastTherapy().getTherapyType();
                     message += "Appointment resolved with therapy: " + type + " " + mins + "minutes .\n";
 
-                    for (Therapy t : diagnosis.get().getTherapyList()) {
-                        therapyRepository.save(t);
-                    }
+                    Therapy therapy = diagnosis.get().getLastTherapy();
+                    therapy.setDiagnosis(diagnosis.get());
+                    therapyRepository.saveAndFlush(therapy);
 
                     diagnosis.get().setDate(LocalDate.now());
                     diagnosisService.save(diagnosis.get());
-                    appointmentRepository.save(appointment.get());
+                    appointmentRepository.saveAndFlush(appointment.get());
 
+                    rulesSession.dispose();
                     return message;
                 }
             }

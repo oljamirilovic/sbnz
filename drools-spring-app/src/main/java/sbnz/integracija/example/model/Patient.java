@@ -35,8 +35,6 @@ public class Patient extends User{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Diagnosis> medicalHistory;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
-//    private List<Family> parents;
 
     public Patient() {
     	super();

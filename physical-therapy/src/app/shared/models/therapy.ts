@@ -4,4 +4,5 @@ export interface Therapy {
   endDate: string;
   type: string;
   minutes: number;
+  resolved: boolean;
 }

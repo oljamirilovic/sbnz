@@ -21,6 +21,7 @@ import { UserService } from 'src/app/shared/services/user-service/user.service';
 })
 export class ViewPatientsComponent implements OnInit {
   @Output() onViewPatientChart = new EventEmitter();
+  showFilter: boolean;
   createNewPatient: boolean;
   selectedPatient: string;
   searchForm: FormGroup;
@@ -53,6 +54,7 @@ export class ViewPatientsComponent implements OnInit {
     this.searchString = '';
     this.selectedPatient = '';
     this.createNewPatient = false;
+    this.showFilter = false;
   }
 
   ngOnInit(): void {
@@ -105,6 +107,47 @@ export class ViewPatientsComponent implements OnInit {
 
   newPatientAdded(item:any) {
     this.createNewPatient = false;
+    this.getData();
+  }
+
+  resolvableTherapiesFilter(item:any){
+    this.userService.getAllPatientsWithResolvableTherapies().subscribe({
+      next: (response) => {
+        this.showFilter = false;
+        this.setData(response);
+      },
+      error: (error) => {
+        this.toastr.error(error.error);
+      },
+    });
+  }
+
+  potentialAbuseFilter(item:any){
+    this.userService.getAllPatientsWithPotentialAbuse().subscribe({
+      next: (response) => {
+        this.showFilter = false;
+        this.setData(response);
+      },
+      error: (error) => {
+        this.toastr.error(error.error);
+      },
+    });
+  }
+
+  resolvableTherapiesByTypeFilter(type:string){
+    this.userService.getAllPatientsWithResolvableTherapiesByType(type).subscribe({
+      next: (response) => {
+        this.showFilter = false;
+        this.setData(response);
+      },
+      error: (error) => {
+        this.toastr.error(error.error);
+      },
+    });
+  }
+
+  clearFilter(item:any){
+    this.showFilter = false;
     this.getData();
   }
 }

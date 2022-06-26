@@ -42,17 +42,6 @@ public class Appointment {
 	@Column(name = "resolved")
     private boolean resolved;
 
-
-   /* public Appointment(Appointment oldApp, JointMotionRange jmr) {
-    	this.therapist = oldApp.therapist;
-    	this.appointmentSymptoms = oldApp.appointmentSymptoms;
-    	this.diagnosis = oldApp.diagnosis;
-    	this.resolved = false;
-    	this.jointMotionRange = jmr;
-    	this.date = LocalDate.now();
-    }*/
-
-
 	public Appointment(long id, Therapist therapist, LocalDate date, List<Symptom> currentSymptoms,
 			boolean resolved) {
 		super();
@@ -62,8 +51,6 @@ public class Appointment {
 		this.appointmentSymptoms = currentSymptoms;
 		this.diagnosis = null;
 		this.resolved = resolved;
-		/*this.jointMotionRange = jointMotionRange;*/
 	}
-
 
 }

@@ -33,7 +33,7 @@ rule "Therapy - KINESI"
         $minutesActiveTherapyTotal : Double() from accumulate(
          	Diagnosis($diagnosis: this, $therapies: therapyList, $therapies.size() > 0) from $medicalHistory and
          	$activeTherapies: List(size > 0) from collect(
-         		Therapy($th:this, endDate == null, therapyType != TherapyType.ELECTRIC_THERAPY) from $therapies
+         		Therapy($th:this, resolved == false, therapyType != TherapyType.ELECTRIC_THERAPY) from $therapies
          	) and
          	$minutesPerDiagnosis : Number() from accumulate(
 	    		Therapy($minutes : minutes) from $activeTherapies,
@@ -43,8 +43,8 @@ rule "Therapy - KINESI"
          )
         eval( Math.ceil($minutesActiveTherapyTotal + $age/2) <= 150 )
     then
-        modify ($a) { setResolved(true); }
-        modify ($d) { addTherapy(new Therapy(TherapyType.KINESI_THERAPY, $flexionScore * 15 * $physicalActivity.getActivityValue())); }
+        modify ($a) { setResolved(true) }
+        modify ($d) { addTherapy(new Therapy(TherapyType.KINESI_THERAPY, $flexionScore * 15 * $physicalActivity.getActivityValue())) }
         System.out.println("Set therapy - KINESI");
         System.out.println("Appointment resolved");
         System.out.println("///////////////////////////////////////////////////");
@@ -63,7 +63,7 @@ rule "Therapy - POOL"
         $minutesActiveTherapyTotal: Double() from accumulate(
          	Diagnosis($diagnosis: this, $therapies: therapyList, $therapies.size() > 0) from $medicalHistory and
          	$activeTherapies: List(size > 0) from collect(
-         		Therapy($therapy:this, endDate == null, therapyType == TherapyType.POOL_THERAPY) from $therapies
+         		Therapy($therapy:this, resolved == false, therapyType == TherapyType.POOL_THERAPY) from $therapies
          	) and
          	$minutesPerDiagnosis : Number() from accumulate(
 	    		Therapy($minutes: minutes) from $activeTherapies,
@@ -73,8 +73,8 @@ rule "Therapy - POOL"
          )
         eval( Math.ceil($minutesActiveTherapyTotal + $age/2) <= 120 )
     then
-        modify ($a) { setResolved(true); }
-        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $flexionScore * 10 * $physicalActivity.getActivityValue())); }
+        modify ($a) { setResolved(true) }
+        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $flexionScore * 10 * $physicalActivity.getActivityValue())) }
         System.out.println("Set therapy - POOL");
         System.out.println("Appointment resolved");
         System.out.println("///////////////////////////////////////////////////");
@@ -101,8 +101,8 @@ rule "Therapy - ELECTRIC"
             sum($activeTherapies)
          )
     then
-        modify ($a) { setResolved(true); }
-        modify ($d) { addTherapy(new Therapy(TherapyType.ELECTRIC_THERAPY, $flexionScore * 10)); }
+        modify ($a) { setResolved(true) }
+        modify ($d) { addTherapy(new Therapy(TherapyType.ELECTRIC_THERAPY, $flexionScore * 10)) }
         System.out.println("Set therapy - ELECTRIC");
         System.out.println("Appointment resolved");
         System.out.println("///////////////////////////////////////////////////");

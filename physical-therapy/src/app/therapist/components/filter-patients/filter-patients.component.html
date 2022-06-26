@@ -1,0 +1,79 @@
+<div id="container-div">
+    <!--<div id="img-div">
+      <img
+        class="mat-elevation-z8"
+        src="assets/images/gon1.jpg"
+        alt="Goniometer image"
+      />
+    </div>-->
+    <div id="form-holder-div">
+      <h2>Filter patients</h2>
+
+      <div class="modal-footer">
+        <button
+          mat-flat-button
+          type="button"
+          class="btn btn-primary"
+          (click)="resolvableTherapies()"
+        >
+          With resolvable therapies
+        </button>
+      </div>
+
+      <mat-divider></mat-divider>
+      <div class="modal-footer">
+        <button
+          mat-flat-button
+          type="button"
+          class="btn btn-primary"
+          (click)="potentialAbuse()"
+        >
+          With potential abuse
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="row" style="display: flex">
+        <mat-form-field class="example-full-width">
+          <span matPrefix>Therapy type </span>
+          <mat-select #type >
+            <mat-option *ngFor="let p of therapyTypes" [value]="p">
+              {{ p }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button
+          mat-flat-button
+          type="button"
+          class="btn btn-primary"
+          style="width: 70%;"
+          (click)="resolvableTherapiesByType()"
+        >
+        With resolvable therapies
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+    
+      <div class="modal-footer">
+        <button
+          mat-flat-button
+          type="button"
+          class="btn btn-danger"
+          (click)="close()"
+        >
+          Close
+        </button>
+        <button
+          mat-flat-button
+          type="button"
+          class="btn btn-danger"
+          (click)="clear()"
+        >
+          Clear filter
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="jw-modal-background"></div>
+  
