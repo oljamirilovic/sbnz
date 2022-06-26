@@ -6,7 +6,7 @@ import { Diagnosis } from '../../models/diagnosis';
 import { Jmr } from '../../models/jmr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DiagnosisService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -19,12 +19,21 @@ export class DiagnosisService {
     );
   }
 
-  checkNewTherapyAvailable(jmr: Jmr, diagnosisId: number): Observable<any>{
+  checkNewTherapyAvailable(jmr: Jmr, diagnosisId: number): Observable<any> {
     return this.http.post(
-      `${environment.baseUrl}/${environment.diagnosis}/checkNewTherapyAvailable/${diagnosisId}`, jmr, {
+      `${environment.baseUrl}/${environment.diagnosis}/checkNewTherapyAvailable/${diagnosisId}`,
+      jmr,
+      {
         headers: this.headers,
-        responseType: 'text'
+        responseType: 'text',
       }
+    );
+  }
+
+  endTherapyRequested(therapyId: number): Observable<any> {
+    return this.http.get(
+      `${environment.baseUrl}/${environment.diagnosis}/endTherapyRequested/${therapyId}`,
+      { responseType: 'text' }
     );
   }
 }

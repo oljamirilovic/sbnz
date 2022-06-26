@@ -21,13 +21,13 @@ rule "Therapy - KINESI"
 	agenda-group "therapy"
 	salience 3
     when
-    	$a: Appointment( resolved == false, $flexionScore: diagnosis.getScoreOfLastJmr(), $flexionScore <= 2, $diagnosisId : diagnosis.id )
+    	$a: Appointment( resolved == false, $flexionScore: diagnosis.getScoreOfLastJmr(), $flexionScore <= 2,
+    	 $diagnosisId : diagnosis.id, $symptomsReported: appointmentSymptoms)
     	$d: Diagnosis(id == $diagnosisId,  $testResultId : testResult.id, $patientId : patient.id, $illnessId: illness.id)
         $t: TestResult(id == $testResultId, (score > 1 || score == 0))
-        $i: Illness(id == $illnessId, $symptoms : illnessSymptoms )
         $p: Patient(id == $patientId, $age : age, $physicalActivity : physicalActivity, $medicalHistory : medicalHistory)
         Number($value : intValue == 0) from accumulate(
-        	Symptom($s:this, name == "BONE FRACTURE") from $symptoms,
+        	Symptom($s:this, name == "BONE FRACTURE") from $symptomsReported,
         	count($s)
         )
         $minutesActiveTherapyTotal : Double() from accumulate(

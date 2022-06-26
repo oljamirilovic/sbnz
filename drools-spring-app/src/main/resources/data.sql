@@ -60,10 +60,16 @@ insert into symptom(name) values ('SMOKER');
 insert into symptom(name) values ('HORMONE IMBALANCE');
 insert into symptom(name) values ('EARLY MENOPAUSE');
 insert into symptom(name) values ('BONE FRACTURE');
+insert into symptom(name) values ('WEIGHT GAIN');
+insert into symptom(name) values ('JOINT SWELLING');
+insert into symptom(name) values ('KNEE CRACKING');
+insert into symptom(name) values ('JOINT PAIN');
 
 ----------------ILLNESSES------------------------
 insert into illness(name, testType) values ('OSTEOPOROSIS', 'BONE_DENSITY');
 insert into illness(name, testType) values ('OSTEOPENIA', 'BONE_DENSITY');
+insert into illness(name, testType) values ('ARTHROSIS', 'NA');
+insert into illness(name, testType) values ('ARTHRITIS', 'NA');
 
 --osteoporosis
 insert into illnessSymptoms(illness_id, symptom_id) values (1, 1);
@@ -80,6 +86,20 @@ insert into illnessSymptoms(illness_id, symptom_id) values (2, 2);
 insert into illnessSymptoms(illness_id, symptom_id) values (2, 4);
 insert into illnessSymptoms(illness_id, symptom_id) values (2, 6);
 insert into illnessSymptoms(illness_id, symptom_id) values (2, 10);
+
+--arthrosis
+insert into illnessSymptoms(illness_id, symptom_id) values (3, 8);
+insert into illnessSymptoms(illness_id, symptom_id) values (3, 11);
+insert into illnessSymptoms(illness_id, symptom_id) values (3, 12);
+insert into illnessSymptoms(illness_id, symptom_id) values (3, 13);
+insert into illnessSymptoms(illness_id, symptom_id) values (3, 14);
+
+--arthritis
+insert into illnessSymptoms(illness_id, symptom_id) values (4, 14);
+insert into illnessSymptoms(illness_id, symptom_id) values (4, 12);
+insert into illnessSymptoms(illness_id, symptom_id) values (4, 2);
+insert into illnessSymptoms(illness_id, symptom_id) values (4, 4);
+insert into illnessSymptoms(illness_id, symptom_id) values (3, 3);
 
 ---------------TEST_RESULTS------------------------
 insert into test_result(score) values (3);
@@ -105,3 +125,11 @@ insert into therapy(minutes, therapyType, startDate, endDate, resolved, diagnosi
 (30, 'KINESI_THERAPY', '2021-11-07', '2021-11-21', true, 1);
 insert into therapy(minutes, therapyType, startDate, endDate, resolved, diagnosis_id) values
 (60, 'POOL_THERAPY', '2022-06-11', null, false, 3);
+
+----------------JMR------------------------
+insert into joint_motion_range(date, elbowFlexion, kneeFlexion, shoulderFlexion, flexionScore, diagnosis_id) values
+('2022-06-11', 0, 0, 0, 2, 1);
+insert into joint_motion_range(date, elbowFlexion, kneeFlexion, shoulderFlexion, flexionScore, diagnosis_id) values
+('2022-06-11', 0, 0, 0, 3, 1);
+insert into joint_motion_range(date, elbowFlexion, kneeFlexion, shoulderFlexion, flexionScore, diagnosis_id) values
+('2022-06-11', 0, 0, 0, 2, 3);

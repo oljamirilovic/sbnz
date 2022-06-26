@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import sbnz.integracija.example.model.Appointment;
 import sbnz.integracija.example.model.Diagnosis;
+import sbnz.integracija.example.model.Symptom;
 
 import java.util.List;
 
@@ -36,4 +37,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query("select d from Appointment d left join fetch d.appointmentSymptoms")
     List<Appointment> findAllWithSymptoms();
+
+    @Query("select d from Appointment d left join fetch d.appointmentSymptoms i where d.id =?1")
+    Appointment findByIdWithSymptoms(long id);
 }

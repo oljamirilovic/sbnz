@@ -128,22 +128,15 @@ public class AppointmentService {
         if(!appointment.isPresent()){
             throw new NotFoundException("Appointment not found");
         }
-        Optional<Diagnosis> diagnosis = diagnosisService.findById(appointment.get().getId());
+        Appointment appp = appointmentRepository.findByIdWithSymptoms(appointmentId);
+        appointment.get().setAppointmentSymptoms(appp.getAppointmentSymptoms());
+
+        Optional<Diagnosis> diagnosis = Optional.ofNullable(appointmentRepository.findDiagnosisByAppointmentIdWithJmrs(appointment.get().getId()));
         if(!diagnosis.isPresent()){
             throw new NotFoundException("Diagnosis not found");
         }
-        List<JointMotionRange> jointMotionRangeList = jmrRepository.findAllByDiagnosisId(diagnosis.get().getId());
-        if(jointMotionRangeList.isEmpty()){
-            diagnosis.get().setJointMotionRangeList(new ArrayList<>());
-        }else{
-            diagnosis.get().setJointMotionRangeList(jointMotionRangeList);
-        }
         List<Therapy> therapies = therapyRepository.findAllByDiagnosisId(diagnosis.get().getId());
-        if(therapies.isEmpty()){
-            diagnosis.get().setTherapyList(new ArrayList<>());
-        }else{
-            diagnosis.get().setTherapyList(therapies);
-        }
+        diagnosis.get().setTherapyList(therapies);
 
         Optional<Patient> patient = userService.getById(diagnosis.get().getPatient().getId());
         if(!patient.isPresent()){

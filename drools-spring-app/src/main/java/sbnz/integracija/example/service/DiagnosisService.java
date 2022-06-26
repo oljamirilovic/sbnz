@@ -129,6 +129,32 @@ public class DiagnosisService {
         }
     }
 
+    public String endTherapyRequested(long therapyId){
+        Optional<Therapy> therapy = therapyService.findById(therapyId);
+        if(!therapy.isPresent()){
+            throw new NotFoundException("Therapy not found");
+        }
+        ChosenValues chosenValues = new ChosenValues();
+        chosenValues.setChosenTherapyId(therapyId);
+        chosenValues.setPatientRequested(true);
+
+        KieSession rulesSession = kieContainer.newKieSession("rules_endtherapy");
+        rulesSession.insert(therapy.get());
+        rulesSession = setup(rulesSession);
+        rulesSession.insert(chosenValues);
+        rulesSession.fireAllRules();
+
+        if(therapy.get().isResolved()){
+            therapyService.save(therapy.get());
+
+            rulesSession.dispose();
+            return "Therapy resolved.";
+        }else{
+            rulesSession.dispose();
+            return "Continue current therapy.";
+        }
+    }
+
     public KieSession setup(KieSession rulesSession){
 
         List<Appointment> appointments = appointmentRepository.findAll();

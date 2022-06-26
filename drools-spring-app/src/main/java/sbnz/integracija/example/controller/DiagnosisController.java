@@ -38,4 +38,14 @@ public class DiagnosisController {
             return new ResponseEntity<>("Diagnosis not found", HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping(value = "/endTherapyRequested/{therapyId}")
+    @PreAuthorize("hasRole('THERAPIST')")
+    public ResponseEntity<?> endTherapyRequested(@PathVariable("therapyId") long therapyId){
+        try {
+            return new ResponseEntity<>(diagnosisService.endTherapyRequested(therapyId), HttpStatus.OK);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>("Therapy not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }

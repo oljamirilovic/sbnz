@@ -11,6 +11,7 @@ import sbnz.integracija.example.repository.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TherapyService {
@@ -48,6 +49,10 @@ public class TherapyService {
 
     public List<Therapy> findAllByDiagnosisId(long id){
         return therapyRepository.findAllByDiagnosisId(id);
+    }
+
+    public Optional<Therapy> findById(long therapyId){
+        return therapyRepository.findById(therapyId);
     }
 
     public void save(Therapy therapy){ this.therapyRepository.saveAndFlush(therapy);}
@@ -115,8 +120,10 @@ public class TherapyService {
             rulesSession.insert(a);
         }
 
-        List<Appointment> appointments = appointmentRepository.findAll();
+        List<Appointment> appointments = appointmentRepository.findAllWithSymptoms();
         for (Appointment a: appointments) {
+            Diagnosis diagnosis = appointmentRepository.findDiagnosisByAppointmentIdWithJmrs(a.getId());
+            a.setDiagnosis(diagnosis);
             rulesSession.insert(a);
         }
 

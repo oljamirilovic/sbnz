@@ -63,17 +63,17 @@ public class Diagnosis {
 		this.jointMotionRangeList.add(jmr);
 	}
 
-	public double getScoreOfLastJmr(){
-		if (this.jointMotionRangeList == null || this.jointMotionRangeList.isEmpty()) {
-			throw new BadRequestException("JointMotionRange list is empty");
-		}
-		JointMotionRange j = this.jointMotionRangeList.get(0);
-		for (JointMotionRange jmr: this.jointMotionRangeList) {
-			if(j.getDate().isBefore(jmr.getDate())){
-				j = jmr;
+	public Double getScoreOfLastJmr(){
+		if (this.jointMotionRangeList != null && !this.jointMotionRangeList.isEmpty()) {
+			JointMotionRange j = this.jointMotionRangeList.get(0);
+			for (JointMotionRange jmr: this.jointMotionRangeList) {
+				if(j.getDate().isBefore(jmr.getDate())){
+					j = jmr;
+				}
 			}
+			return j.getFlexionScore();
 		}
-		return j.getFlexionScore();
+		return null;
 	}
 
 	public Therapy getLastTherapy(){

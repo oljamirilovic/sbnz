@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
+import { DiagnosisService } from '../../services/diagnosis-service/diagnosis.service';
 import { TherapyService } from '../../services/therapy-service/therapy.service';
 
 @Component({
@@ -28,7 +29,8 @@ export class ViewTherapiesComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private liveAnnouncer: LiveAnnouncer,
-    private therapyService: TherapyService
+    private therapyService: TherapyService,
+    private diagnosisService: DiagnosisService
   ) {
     this.data = [];
     this.showJMR= false;
@@ -64,7 +66,19 @@ export class ViewTherapiesComponent implements OnInit {
   }
 
   endTherapy(therapyId: number){
-    //TODO endTherapy just end    
+    this.diagnosisService.endTherapyRequested(therapyId).subscribe({
+      next: (response) => {
+        if(response == "Therapy resolved."){
+          this.toastr.success(response);
+          this.getData();
+        }else{
+          this.toastr.info(response);
+        }
+      },
+      error: (error) => {
+        this.toastr.error(error.error);
+      },
+    });   
   }
 
   close(){
@@ -72,6 +86,7 @@ export class ViewTherapiesComponent implements OnInit {
   }
 
   queryFinished(){
+    this.showJMR = false;
     this.getData();
   }
 }

@@ -13,20 +13,20 @@ import sbnz.integracija.example.model.JointMotionRange;
 import sbnz.integracija.example.model.utils.DateUtil;
 
 
-query therapyMinDaysPast(Therapy currentTherapy)
-	eval(DateUtil.getDaysElapsed(currentTherapy.startDate) >= 14)
+query therapyMinDaysPast(LocalDate startDate)
+	eval(DateUtil.getDaysElapsed(startDate) >= 14)
 end
 
 rule "End current therapy and find a new one"
     when
         $c: ChosenValues($chosenTherapyId: chosenTherapyId, $newJmrScore: newJmrScore, patientRequested == false)
-    	$t: Therapy(id = $chosenTherapyId, $diagnosisId: diagnosis.id, resolved == false)
+    	$t: Therapy(id == $chosenTherapyId, $diagnosisId: diagnosis.id, resolved == false, $startDate: startDate)
     	$a: Appointment( diagnosis.id == $diagnosisId)
-    	$d: Diagnosis(id == $diagnosisId, $oldJMRscore : $d.getScoreOfLastJmr(), $newJmrScore != $oldJMRscore )
-        therapyMinDaysPast( $t;)
+    	$d: Diagnosis(id == $diagnosisId, $oldJMRscore : getScoreOfLastJmr(), $newJmrScore != $oldJMRscore )
+        therapyMinDaysPast( $startDate;)
     then
-        modify($t) { $t.endTherapy() }
-        modify($d) { $d.addJMR(new JointMotionRange($newJmrScore, LocalDate.now(), $d)) }
+        modify($t) { endTherapy() }
+        modify($d) { addJMR(new JointMotionRange($newJmrScore, LocalDate.now(), $d)) }
         modify($a) { setResolved(false) }
         System.out.println("Therapy ended");
         System.out.println("Find new therapy");
@@ -36,10 +36,10 @@ end;
 rule "End current therapy"
     when
         $c: ChosenValues($chosenTherapyId: chosenTherapyId, patientRequested == true)
-    	$t: Therapy(id = $chosenTherapyId, resolved == false)
-        therapyMinDaysPast( $t; )
+    	$t: Therapy(id == $chosenTherapyId, resolved == false, $startDate: startDate)
+        therapyMinDaysPast( $startDate; )
     then
-        modify($t) { $t.endTherapy() }
+        modify($t) { endTherapy() }
         System.out.println("Therapy ended");
         System.out.println("///////////////////////////////////////////////////");
 end;
