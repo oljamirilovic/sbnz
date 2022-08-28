@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sbnz.integracija.example.dto.NewPatientDTO;
 import sbnz.integracija.example.dto.PatientDTO;
+import sbnz.integracija.example.dto.TherapistDTO;
 import sbnz.integracija.example.exception.ForbiddenException;
 import sbnz.integracija.example.exception.NotFoundException;
 import sbnz.integracija.example.exception.UserNotFound;
@@ -61,6 +62,14 @@ public class UserService {
         throw new NotFoundException("Patient not found");
     }
 
+    public TherapistDTO getTherapist(String username){
+        Optional<Therapist> p = this.therapistRepository.findByUsername(username);
+        if(p.isPresent()){
+            return new TherapistDTO(p.get());
+        }
+        throw new NotFoundException("Therapist not found");
+    }
+
     public List<PatientDTO> getAllPatients(String searchTerm){
         List<PatientDTO> ret = new ArrayList<>();
         List<Patient> all = new ArrayList<>();
@@ -106,5 +115,54 @@ public class UserService {
         }
 
         return "New patient created";
+    }
+
+    public boolean deletePatient(String username){
+        Optional<Patient> p = this.patientRepository.findByUsername(username);
+        if(p.isPresent()){
+            p.get().setDeleted(true);
+            patientRepository.save(p.get());
+            return true;
+        }
+        throw new NotFoundException("Patient not found");
+    }
+
+    public String newTherapist(NewPatientDTO newPatientDTO){
+        if(therapistRepository.findByUsername(newPatientDTO.getUsername()).isPresent()){
+            throw new ForbiddenException("Username already exists");
+        }
+        Therapist therapist = new Therapist(newPatientDTO);
+        therapist.setPassword(passwordEncoder.encode(newPatientDTO.getPassword()));
+        therapist.setRole(userRoleRepository.findByName("THERAPIST").get());
+        this.therapistRepository.saveAndFlush(therapist);
+
+        return "New therapist created";
+    }
+
+    public List<TherapistDTO> getAllTherapists(String searchTerm){
+        List<TherapistDTO> ret = new ArrayList<>();
+        List<Therapist> all = new ArrayList<>();
+        if(searchTerm != null && !searchTerm.equals("") && !searchTerm.equals("all")) {
+            all = this.therapistRepository.findAllBySearchTerm(searchTerm);
+        }else{
+            all = this.therapistRepository.findAll();
+        }
+        if(!all.isEmpty()) {
+            for (Therapist user : all) {
+                TherapistDTO dto = new TherapistDTO(user);
+                ret.add(dto);
+            }
+        }
+        return ret;
+    }
+
+    public boolean deleteTherapist(String username){
+        Optional<Therapist> p = this.therapistRepository.findByUsername(username);
+        if(p.isPresent()){
+            p.get().setDeleted(true);
+            therapistRepository.save(p.get());
+            return true;
+        }
+        throw new NotFoundException("Therapist not found");
     }
 }

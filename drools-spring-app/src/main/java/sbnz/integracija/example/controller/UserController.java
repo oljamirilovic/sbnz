@@ -28,7 +28,7 @@ public class UserController {
     private PatientService patientService;
 
     @GetMapping("/getAllPatients/{searchTerm}")
-    @PreAuthorize("hasRole('THERAPIST')")
+    @PreAuthorize("hasAnyRole('THERAPIST', 'ADMIN')")
     public ResponseEntity<?> getAllPatients(@PathVariable("searchTerm") String searchTerm) {
         try {
             return new ResponseEntity<>(userService.getAllPatients(searchTerm), HttpStatus.OK);
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/getPatient/{username}")
-    @PreAuthorize("hasRole('THERAPIST')")
+    @PreAuthorize("hasAnyRole('THERAPIST', 'ADMIN')")
     public ResponseEntity<?> getPatient(@PathVariable("username") String username) {
         try {
             return new ResponseEntity<>(userService.getPatient(username), HttpStatus.OK);
@@ -89,6 +89,56 @@ public class UserController {
                     getAllPatientsWithTherapiesWithMinDaysPastByTherapyType(TherapyType.valueOf(type)), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>("Error in resolvableTherapiesByType", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/deletePatient/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deletePatient(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(userService.deletePatient(username), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Error in deletePatient", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/newTherapist", consumes = "application/json")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> newTherapist(@RequestBody NewPatientDTO newPatientDTO){
+        try {
+            return new ResponseEntity<>(userService.newPatient(newPatientDTO), HttpStatus.OK);
+        }catch (ForbiddenException e){
+            return new ResponseEntity<>("Username already exists", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/getAllTherapists/{searchTerm}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getAllTherapists(@PathVariable("searchTerm") String searchTerm) {
+        try {
+            return new ResponseEntity<>(userService.getAllTherapists(searchTerm), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Error in getAllTherapists", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/getTherapist/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getTherapist(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(userService.getTherapist(username), HttpStatus.OK);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>("Therapist not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/deleteTherapist/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteTherapist(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(userService.deleteTherapist(username), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Error in deleteTherapist", HttpStatus.BAD_REQUEST);
         }
     }
 }

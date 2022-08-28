@@ -49,4 +49,13 @@ public class FamilyController {
         }
     }
 
+    @GetMapping("/getParentsByChildUsername/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getParentsByChildUsername(@PathVariable("username") String username) {
+        try {
+            return new ResponseEntity<>(familyService.getParentsByChildUsername(username), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>("No parents found", HttpStatus.NOT_FOUND);
+        }
+    }
 }

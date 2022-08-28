@@ -43,6 +43,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id")
     private UserRole role;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
     public User(){}
 
     public User(Long id, String username, String password, String firstName, String lastName){

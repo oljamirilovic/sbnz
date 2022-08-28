@@ -118,6 +118,7 @@ public class AppointmentService {
         }
         //diagnosis.addJMR(jointMotionRange);
         jointMotionRange.setDiagnosis(diagnosis);
+        //jmrRepository.save(jointMotionRange);
         diagnosisService.saveJmr(jointMotionRange);
         return true;
     }
@@ -135,6 +136,9 @@ public class AppointmentService {
         if(!diagnosis.isPresent()){
             throw new NotFoundException("Diagnosis not found");
         }
+        List<JointMotionRange> jmrs = jmrRepository.findAllByDiagnosisId(diagnosis.get().getId());
+        diagnosis.get().setJointMotionRangeList(jmrs);
+
         List<Therapy> therapies = therapyRepository.findAllByDiagnosisId(diagnosis.get().getId());
         diagnosis.get().setTherapyList(therapies);
 
@@ -173,7 +177,7 @@ public class AppointmentService {
                 return message;
             }
             else {
-                message += "Test for " + diagnosis.get().getIllness().getTestType() + " has been done.\n";
+                message += diagnosis.get().getTestResult().getScore() + " Test for " + diagnosis.get().getIllness().getTestType() + " has been done.\n";
                 testResultRepository.save(diagnosis.get().getTestResult());
 
                 rulesSession.getAgenda().getAgendaGroup("therapy").setFocus();

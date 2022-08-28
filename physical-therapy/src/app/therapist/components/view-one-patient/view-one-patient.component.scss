@@ -81,3 +81,18 @@ img {
 .example-viewport {
   height: 50%;
 }
+
+.h3-div {
+  background-color: lightgrey;
+  width: 96%;
+  margin-left: 20px;
+  height: 72px;
+  column-span: all;
+}
+
+.presentSymptomsH3 {
+  font-size: large;
+  text-align: -webkit-center;
+  margin-top: 20px;
+  color: gray;
+}

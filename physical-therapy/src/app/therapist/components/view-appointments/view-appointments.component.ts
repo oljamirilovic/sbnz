@@ -30,7 +30,7 @@ export class ViewAppointmentsComponent implements OnInit {
     'PatientFN',
     'PatientLN',
     'Resolved',
-    'ViewDetails',
+    //'ViewDetails',
     'Start',
   ];
 

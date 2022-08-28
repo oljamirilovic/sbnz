@@ -37,6 +37,18 @@ public class FamilyService {
         this.kieContainer = kieContainer;
     }
 
+    public ArrayList<String> getParentsByChildUsername(String username){
+        List<Family> all = familyRepository.findAllByChildUsername(username);
+        if (all.isEmpty()) {
+            throw new NotFoundException("No family found");
+        }
+        ArrayList<String> retval = new ArrayList<>();
+        for (Family f : all){
+            retval.add(f.getParent());
+        }
+        return retval;
+    }
+
     public FamilyTreeDTO getAllByChildUsername(String username) {
         List<Family> all = familyRepository.findAllByChildUsername(username);
         if (all.isEmpty()) {

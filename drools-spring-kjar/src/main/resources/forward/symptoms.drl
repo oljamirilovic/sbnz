@@ -21,6 +21,5 @@ rule "Symptoms"
     	System.out.println("Illness: " + $name);
     	System.out.println("Num of symptoms: " + $value + "/" + $symptoms.size());
     	System.out.println("///////////////////////////////////////////////////");
-    	modify($d) { setIllness($i) }
-    	// TODO check if testRequired?
+    	modify($d) { setIllness($i); }
 end

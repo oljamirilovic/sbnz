@@ -12,13 +12,19 @@ import { ShowFamilyComponent } from './components/show-family/show-family.compon
 import { ViewTherapiesComponent } from './components/view-therapies/view-therapies.component';
 import { AddJmrComponent } from './components/add-jmr/add-jmr.component';
 import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { NewPatientComponent } from './components/new-patient/new-patient.component';
+import { EditPatientComponent } from './components/edit-patient/edit-patient.component';
 
 @NgModule({
   declarations: [
+    NewPatientComponent,
+    LogoutComponent,
     ShowFamilyComponent,
     ViewTherapiesComponent,
     AddJmrComponent,
     CreateAppointmentComponent,
+    EditPatientComponent,
   ],
 
   imports: [
@@ -37,6 +43,9 @@ import { CreateAppointmentComponent } from './components/create-appointment/crea
     AddJmrComponent,
     ViewTherapiesComponent,
     CreateAppointmentComponent,
+    LogoutComponent,
+    NewPatientComponent,
+    EditPatientComponent
   ],
   providers: [
     UserService,

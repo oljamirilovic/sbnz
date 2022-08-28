@@ -61,8 +61,8 @@ export class LoginFormComponent implements OnInit {
           this.loginForm.reset();
           if (result.userType === 'THERAPIST') {
             this.router.navigate(['/therapist-dashboard']);
-          } else if (result.userType === 'PATIENT') {
-            this.router.navigate(['/patient-dashboard']);
+          } else if (result.userType === 'ADMIN') {
+            this.router.navigate(['/therapy/admin/admin-dashboard']);
           } 
           
         },

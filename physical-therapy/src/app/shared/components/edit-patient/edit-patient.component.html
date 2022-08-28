@@ -1,0 +1,158 @@
+<div id="container-div">
+    <div id="img-div">
+      <img
+        class="mat-elevation-z8"
+        src="assets/images/user.png"
+        alt="User image"
+      />
+    </div>
+    <div id="form-holder-div">
+      <h2>Edit Patient</h2>
+      <mat-divider></mat-divider>
+      <div>
+        <form class="example-form" [formGroup]="loginForm">
+          <mat-card-content>
+            <div class="row" style="display: flex">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  type="text"
+                  placeholder="Username"
+                  formControlName="username"
+                  required
+                  [disabled]="true"
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  placeholder="Password"
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="password"
+                  required
+                />
+                <mat-icon matSuffix (click)="hide = !hide">{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="row" style="display: flex">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  type="text"
+                  placeholder="FirstName"
+                  formControlName="fn"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  type="text"
+                  placeholder="LastName"
+                  formControlName="ln"
+                  required
+                />
+              </mat-form-field>
+            </div>
+            <div class="row" style="display: flex">
+              <mat-form-field class="example-full-width">
+                <input
+                  min="1"
+                  matInput
+                  class="form-control"
+                  type="number"
+                  placeholder="Age"
+                  formControlName="age"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                  <span matPrefix>Gender </span>
+                  <mat-select #gender formControlName="gender">
+                    <mat-option *ngFor="let p of genderOptions" [value]="p">
+                      {{ p }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              
+            </div>
+  
+            <div class="row" style="display: flex">
+              <mat-form-field class="example-full-width">
+                <input
+                  min="1"
+                  matInput
+                  class="form-control"
+                  type="number"
+                  placeholder="Bone Density"
+                  formControlName="bmd"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <span matPrefix>Physical Activity </span>
+                <mat-select #pa formControlName="pa">
+                  <mat-option *ngFor="let p of paOptions" [value]="p">
+                    {{ p }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+  
+            <mat-divider></mat-divider>
+            <h3>Parents</h3>
+  
+            <div class="row" style="display: flex">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  type="text"
+                  placeholder="Parent1 Username"
+                  formControlName="p1"
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  type="text"
+                  placeholder="Parent2 Username"
+                  formControlName="p2"
+                />
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <div class="modal-footer">
+            <button
+              mat-flat-button
+              type="button"
+              class="btn btn-danger"
+              (click)="close()"
+            >
+              Cancel
+            </button>
+            <button
+              mat-flat-button
+              type="button"
+              class="btn btn-primary"
+              (click)="save()"
+              [disabled]="loginForm.invalid"
+            >
+              Save changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="jw-modal-background"></div>
+  

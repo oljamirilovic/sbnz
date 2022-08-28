@@ -1,0 +1,90 @@
+<div id="container-div">
+    <div id="img-div">
+      <img
+        class="mat-elevation-z8"
+        src="assets/images/dr.jpg"
+        alt="User image"
+      />
+    </div>
+    <div id="form-holder-div">
+      <h2>New Therapist</h2>
+      <mat-divider></mat-divider>
+      <div>
+        <form class="example-form" [formGroup]="loginForm">
+          <mat-card-content>
+            <div class="row" style="display: flex">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  type="text"
+                  placeholder="Username"
+                  formControlName="username"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  placeholder="Password"
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="password"
+                  required
+                />
+                <mat-icon matSuffix (click)="hide = !hide">{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </mat-form-field>
+            </div>
+            <div class="row" style="display: flex">
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  type="text"
+                  placeholder="FirstName"
+                  formControlName="fn"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  class="form-control"
+                  type="text"
+                  placeholder="LastName"
+                  formControlName="ln"
+                  required
+                />
+              </mat-form-field>
+            </div>
+                              
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <div class="modal-footer">
+            <button
+              mat-flat-button
+              type="button"
+              class="btn btn-danger"
+              (click)="close()"
+            >
+              Close
+            </button>
+            <button
+              mat-flat-button
+              type="button"
+              class="btn btn-primary"
+              (click)="create()"
+              [disabled]="loginForm.invalid"
+            >
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="jw-modal-background"></div>
+  

@@ -1,0 +1,87 @@
+<mat-toolbar class="mat-elevation-z8">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  <span class="span">Physical Therapy App</span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <img
+      class="mat-elevation-z8"
+      src="assets/images/sbnz22.jpg"
+      alt="Default image"
+    />
+
+    <h4 class="name">{{ this.user.username }}</h4>
+
+    <button
+      mat-button
+      class="menu-button"
+      (click)="onLogoutButtonClicked()"
+      id="logout-button"
+    >
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+
+    <mat-divider></mat-divider>
+    <mat-action-list>
+      <mat-list-item
+        (click)="this.activeView = '1'"
+        [ngClass]="this.activeView === '1' ? 'active-tab' : ''"
+        >All patients</mat-list-item
+      >
+      <mat-list-item
+        (click)="this.activeView = '2'"
+        [ngClass]="this.activeView === '2' ? 'active-tab' : ''"
+        >All therapists</mat-list-item
+      >
+    </mat-action-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <app-view-all-patients
+        class="registar"
+        *ngIf="this.activeView === '1'"
+        (onEditPatient)="onEditPatientClicked($event)"
+        (onDeletePatient)="onDeletePatientClicked($event)"
+      ></app-view-all-patients>
+      <app-view-therapists
+        class="registar"
+        *ngIf="this.activeView === '2'"
+        (onEditTherapist)="onEditTherapistClicked($event)"
+        (onDeleteTherapist)="onDeleteTherapistClicked($event)"
+      ></app-view-therapists>
+      <app-edit-patient
+        [patientUsername]="this.selectedPatient"
+        class="registar"
+        *ngIf="this.activeView === '3'"
+        (closeEditPatient)="this.activeView = '1'"
+      ></app-edit-patient>
+      <app-edit-therapist
+        [therapistUsername]="this.selectedUser"
+        class="registar"
+        *ngIf="this.activeView === '4'"
+        (closeEditTherapist)="this.activeView = '2'"
+      ></app-edit-therapist>
+      <app-confirm-action
+        [username]="this.selectedUser"
+        [isPatient]="this.isPatient"
+        class="registar"
+        *ngIf="this.activeView === '5'"
+        (onConfirmActionClose)="onCloseConfirmAction($event)"
+        (onConfirmActionConfirm)="onConfirmClicked($event)"
+      ></app-confirm-action>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<app-logout
+  *ngIf="this.showModalLogout"
+  (onLogoutClose)="onLogoutCloseClicked($event)"
+></app-logout>

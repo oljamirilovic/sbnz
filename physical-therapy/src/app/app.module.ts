@@ -2,6 +2,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './root/app-routing.module';
 
@@ -22,7 +23,8 @@ import { TherapistModule } from './therapist/therapist.module';
     MaterialModule,
     SharedModule,
     AuthModule,
-    TherapistModule
+    TherapistModule,
+    AdminModule,
   ],
   providers: [
     {

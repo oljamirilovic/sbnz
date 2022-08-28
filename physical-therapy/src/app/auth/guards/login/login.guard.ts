@@ -18,8 +18,8 @@ export class LoginGuard implements CanActivate {
 
       if (userType === 'ROLE_THERAPIST') {
         this.router.navigate(['/therapy/therapist/therapist-dashboard']);
-      } else if (userType === 'ROLE_PATIENT') {
-        this.router.navigate(['/therapy/patient/patient-dashboard']);
+      } else if (userType === 'ROLE_ADMIN') {
+        this.router.navigate(['/therapy/admin/admin-dashboard']);
       } 
 
       return false;

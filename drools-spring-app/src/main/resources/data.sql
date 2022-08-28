@@ -2,45 +2,58 @@ INSERT INTO role_table (id, name)
 VALUES (1, 'THERAPIST');
 INSERT INTO role_table (id, name)
 VALUES (2, 'PATIENT');
+INSERT INTO role_table (id, name)
+VALUES (3, 'ADMIN');
 
 -- LOZINKE SVIH KORISNIKA SU '123' :)
 
 ----------------USERS------------------------
-insert into users (username, password, first_name, last_name, role_id)
-values ('therapist1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Therapist1', 'Therapistson1', 1);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('therapist1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Therapist1', 'Therapistson1', 1, false );
 insert into therapist (id) values (1);
 
-insert into users (username, password, first_name, last_name, role_id)
-values ('patient1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Peter', 'Peterson', 2);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('patient1', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Peter', 'Peterson', 2, false);
 insert into patient (id, age, gender, bmd, physical_activity) values (2, 60, 'MALE', 1000.0, 'MODERATE');
 
-insert into users (username, password, first_name, last_name, role_id)
-values ('patient2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'John', 'Johnson', 2);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('patient2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'John', 'Johnson', 2, false);
 insert into patient (id, age, gender, bmd, physical_activity) values (3, 30, 'MALE', 800.0, 'VERY_ACTIVE');
 
-insert into users (username, password, first_name, last_name, role_id)
-values ('patient3', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Jane', 'Jensen', 2);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('patient3', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Jane', 'Jensen', 2, false);
 insert into patient (id, age, gender, bmd, physical_activity) values (4, 40, 'FEMALE', 1000.0, 'MODERATE');
 
-insert into users (username, password, first_name, last_name, role_id)
-values ('patient4', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Carol', 'Carlson', 2);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('patient4', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Carol', 'Carlson', 2, false);
 insert into patient (id, age, gender, bmd, physical_activity) values (5, 70, 'FEMALE', 1000.0, 'SEDENTARY');
 
-insert into users (username, password, first_name, last_name, role_id)
-values ('patient5', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sarah', 'Samson', 2);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('patient5', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Sarah', 'Samson', 2, false);
 insert into patient (id, age, gender, bmd, physical_activity) values (6, 55, 'FEMALE', 1000.0, 'SEDENTARY');
 
-insert into users (username, password, first_name, last_name, role_id)
-values ('patient6', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Jack', 'Jackson', 2);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('patient6', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Jack', 'Jackson', 2, false);
 insert into patient (id, age, gender, bmd, physical_activity) values (7, 25, 'MALE', 1000.0, 'MODERATE');
 
-insert into users (username, password, first_name, last_name, role_id)
-values ('patient7', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Josh', 'Johnson', 2);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('patient7', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Josh', 'Johnson', 2, false);
 insert into patient (id, age, gender, bmd, physical_activity) values (8, 85, 'MALE', 1000.0, 'SEDENTARY');
 
-insert into users (username, password, first_name, last_name, role_id)
-values ('patient8', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Clara', 'Johnson', 2);
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('patient8', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Clara', 'Johnson', 2, false);
 insert into patient (id, age, gender, bmd, physical_activity) values (9, 83, 'FEMALE', 1000.0, 'SEDENTARY');
+
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('admin', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Admin', 'Adminovic', 3, false);
+
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('therapist2', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Therapist2', 'Therapistson2', 1, false);
+insert into therapist (id) values (11);
+
+insert into users (username, password, first_name, last_name, role_id, deleted)
+values ('therapist3', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'Therapist3', 'Therapistson3', 1, false);
+insert into therapist (id) values (12);
 
 ----------------FAMILY------------------------
 insert into family(child, parent) values ('patient2', 'patient1');
@@ -115,14 +128,14 @@ values ('2021-12-23', 2, 2, 9);
 
 ----------------APPOINTMENTS------------------------
 insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2021-10-23', 1, true);
-insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2022-06-22', 2, false);
+insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2022-08-15', 2, false);
 insert into appointment(therapist_id, date, diagnosis_id, resolved) values (1, '2021-12-23', 3, true);
 
 ----------------THERAPY------------------------
 insert into therapy(minutes, therapyType, startDate, endDate, resolved, diagnosis_id) values
 (15, 'KINESI_THERAPY', '2021-10-23', '2021-11-07', true, 1);
 insert into therapy(minutes, therapyType, startDate, endDate, resolved, diagnosis_id) values
-(30, 'KINESI_THERAPY', '2021-11-07', '2021-11-21', true, 1);
+(30, 'KINESI_THERAPY', '2022-08-07', null, false, 1);
 insert into therapy(minutes, therapyType, startDate, endDate, resolved, diagnosis_id) values
 (60, 'POOL_THERAPY', '2022-06-11', null, false, 3);
 

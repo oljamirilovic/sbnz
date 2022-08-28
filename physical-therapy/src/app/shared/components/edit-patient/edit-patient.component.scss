@@ -1,0 +1,196 @@
+table {
+    width: 100%;
+  }
+  
+  .example-form {
+    width: 100%;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: flex-start;
+    text-shadow: 0 0 black;
+  }
+  
+  .allSymptoms-form {
+    width: 94%;
+    background-color: #4c4c4c;
+    margin-left: 15px;
+  }
+  
+  input {
+    background: transparent;
+    background-color: transparent;
+  }
+  
+  .example-container {
+    width: 85%;
+    margin-left: 20px;
+    font-size: large;
+    background: transparent;
+  }
+  
+  .form_input {
+    width: 45%;
+    margin-left: 10px;
+    font-size: large;
+    text-shadow: 0 0 black;
+  }
+  
+  .addEmployeeBttn {
+    text-align: right;
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+  
+  mat-card {
+    height: 75%;
+    background-color: transparent;
+    box-shadow: none !important;
+  }
+  
+  .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0.4375em 0;
+    text-shadow: 0 0 black;
+  }
+  
+  .details:hover {
+    background-color: #0f040457;
+    color: white;
+  }
+  
+  .search-placeholder {
+    color: gray;
+  }
+  
+  .mat-table {
+    background-color: #546d78;
+  }
+  
+  img {
+    height: 200px;
+    border-radius: 500px;
+    margin-top: 10px;
+    margin-bottom: 48px;
+  }
+  
+  #img-div {
+    text-align: center;
+  }
+  
+  .presentSymptomsH3 {
+    font-size: large;
+    text-align: -webkit-center;
+    margin-top: 20px;
+    color: gray;
+  }
+  
+  .custom-scroll-bar::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .custom-scroll-bar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.26);
+  }
+  
+  .example-viewport {
+    height: 200px;
+  }
+  
+  .h3-div {
+    background-color: lightgrey;
+    width: 95%;
+    margin-left: 10px;
+    height: 72px;
+    column-span: all;
+  }
+  
+  .btn {
+    //border: 1.5px solid dimgray;
+    margin-top: 20px;
+    width: 200px;
+    color: white;
+    margin-right: 5px;
+  }
+  
+  .btn-danger {
+    background-color: #546d78;
+  }
+  
+  .btn-danger:hover {
+    //border: 1.5px solid #37474f;
+    background-color: #37474f;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    //border: 1.5px solid #db691d;
+    background-color: #db691d;
+    color: white;
+  }
+  .btn-primary {
+    background-color: #ffac50;
+  }
+  
+  .modal-footer {
+    text-align: center;
+  }
+  
+  .example-full-width {
+    width: 50%;
+    margin: 3px;
+    height: 30%;
+    font-size: 15px;
+  }
+  
+  #container-div {
+    //background-color: #000;
+    //opacity: 0.9;
+    position: fixed;
+    /*position: absolute;*/
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 800;
+  }
+  
+  #form-holder-div {
+    opacity: 1;
+    background-color: #424242;
+    width: 500px;
+    margin: auto;
+    margin-top: -80px;
+    /*height: 300px;*/
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 10.5vh;
+    padding-bottom: 20px;
+    z-index: 1000;
+  }
+  
+  .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  
+    /* semi-transparent black  */
+    background-color: #000;
+    opacity: 0.9;
+  
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 100;
+  }
+  
+  h3,
+  h4,
+  h2 {
+    color: white;
+  }
+  
+  

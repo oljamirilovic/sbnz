@@ -6,10 +6,14 @@ import { Family } from '../../models/family';
 import { FamilyTree } from '../../models/familyTree';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FamilyService {
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  private headers = new HttpHeaders({
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    'X-Auth-Token': JSON.parse(localStorage.getItem('currentUser')!).token,
+  });
 
   constructor(private http: HttpClient) {}
 
@@ -23,6 +27,13 @@ export class FamilyService {
     return this.http.get(
       `${environment.baseUrl}/${environment.family}/startBackwardChaining/${username}/${illness}`,
       { responseType: 'text' }
+    );
+  }
+
+  getParentsByChildUsername(username: string): Observable<string[]> {
+    return this.http.get<string[]>(
+      `${environment.baseUrl}/${environment.family}/getParentsByChildUsername/${username}`,
+      { headers: this.headers }
     );
   }
 }

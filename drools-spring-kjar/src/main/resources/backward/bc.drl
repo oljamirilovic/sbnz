@@ -28,7 +28,8 @@ end;
 
 rule "familyHistory"
     when
-        $h: FamilyHistory( hasIllness == false, $patientUsername: patientUsername, $searchedIllness: searchedIllness)
+        $h: FamilyHistory( hasIllness == false, $patientUsername: patientUsername,
+        $searchedIllness: searchedIllness)
         $p1: Patient(username == $patientUsername)
         $f: Family(child == $patientUsername, $parentUsername: parent)
         $p2: Patient(username == $parentUsername)
@@ -36,6 +37,4 @@ rule "familyHistory"
         hasFamilyHistoryOfIllness($patientUsername, $parentUsername, $searchedIllness; )
     then
         modify($h){ setHasIllness(true); }
-        System.out.println( "Illness " + $searchedIllness + " is in " + $parentUsername + " side of the family" );
-        System.out.println("///////////////////////////////////////////////////");
 end;

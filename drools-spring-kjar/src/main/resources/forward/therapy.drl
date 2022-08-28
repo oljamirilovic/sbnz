@@ -43,8 +43,8 @@ rule "Therapy - KINESI"
          )
         eval( Math.ceil($minutesActiveTherapyTotal + $age/2) <= 150 )
     then
-        modify ($a) { setResolved(true) }
-        modify ($d) { addTherapy(new Therapy(TherapyType.KINESI_THERAPY, $flexionScore * 15 * $physicalActivity.getActivityValue())) }
+        modify ($a) { setResolved(true); }
+        modify ($d) { addTherapy(new Therapy(TherapyType.KINESI_THERAPY, $flexionScore * 15 * $physicalActivity.getActivityValue())); }
         System.out.println("Set therapy - KINESI");
         System.out.println("Appointment resolved");
         System.out.println("///////////////////////////////////////////////////");
@@ -73,8 +73,8 @@ rule "Therapy - POOL"
          )
         eval( Math.ceil($minutesActiveTherapyTotal + $age/2) <= 120 )
     then
-        modify ($a) { setResolved(true) }
-        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $flexionScore * 10 * $physicalActivity.getActivityValue())) }
+        modify ($a) { setResolved(true); }
+        modify ($d) { addTherapy(new Therapy(TherapyType.POOL_THERAPY, $flexionScore * 10 * $physicalActivity.getActivityValue())); }
         System.out.println("Set therapy - POOL");
         System.out.println("Appointment resolved");
         System.out.println("///////////////////////////////////////////////////");
@@ -101,8 +101,8 @@ rule "Therapy - ELECTRIC"
             sum($activeTherapies)
          )
     then
-        modify ($a) { setResolved(true) }
-        modify ($d) { addTherapy(new Therapy(TherapyType.ELECTRIC_THERAPY, $flexionScore * 10)) }
+        modify ($a) { setResolved(true); }
+        modify ($d) { addTherapy(new Therapy(TherapyType.ELECTRIC_THERAPY, $flexionScore * 10)); }
         System.out.println("Set therapy - ELECTRIC");
         System.out.println("Appointment resolved");
         System.out.println("///////////////////////////////////////////////////");
@@ -123,4 +123,5 @@ rule "No Therapy"
         System.out.println("Appointment resolved");
         System.out.println("///////////////////////////////////////////////////");
 end
+
 

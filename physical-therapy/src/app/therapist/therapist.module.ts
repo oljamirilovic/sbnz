@@ -9,27 +9,21 @@ import { MaterialModule } from '../root/material-module';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from '../shared/shared.module';
 import { ViewPatientsComponent } from './components/view-patients/view-patients.component';
-import { LogoutComponent } from './components/logout/logout.component';
 import { ViewOnePatientComponent } from './components/view-one-patient/view-one-patient.component';
 import { ViewAppointmentsComponent } from './components/view-appointments/view-appointments.component';
 import { StartAppointmentComponent } from './components/start-appointment/start-appointment.component';
 import { FcResultComponent } from './components/fc-result/fc-result.component';
-import { NewPatientComponent } from './components/new-patient/new-patient.component';
 import { FilterPatientsComponent } from './components/filter-patients/filter-patients.component';
-
-
 
 @NgModule({
   declarations: [
-    LogoutComponent,
     TherapistDashboardComponent,
     ViewPatientsComponent,
     ViewOnePatientComponent,
     ViewAppointmentsComponent,
     StartAppointmentComponent,
     FcResultComponent,
-    NewPatientComponent,
-    FilterPatientsComponent
+    FilterPatientsComponent,
   ],
   imports: [
     CommonModule,
@@ -45,4 +39,4 @@ import { FilterPatientsComponent } from './components/filter-patients/filter-pat
     SharedModule,
   ],
 })
-export class TherapistModule { }
+export class TherapistModule {}

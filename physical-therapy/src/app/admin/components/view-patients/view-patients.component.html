@@ -1,0 +1,168 @@
+<div style="display: flex">
+  <form class="example-form" style="width: 50%" [formGroup]="searchForm">
+    <mat-form-field class="example-container">
+      <span matPrefix> </span>
+      <input
+        matInput
+        class="form-control"
+        style="color: #db691d"
+        type="text"
+        formControlName="search"
+        name="itemSearch"
+      />
+      <mat-placeholder class="search-placeholder"
+        >Search by username/firstname/lastname...</mat-placeholder
+      >
+    </mat-form-field>
+
+    <button
+      style="color: #db691d"
+      type="submit"
+      class="submit-button"
+      (click)="search()"
+      id="submit-button"
+      matSuffix
+      mat-icon-button
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+  <button
+    style="color: #db691d; height: auto; margin-top: -9px; font-size: 18px"
+    type="submit"
+    class="submit-button"
+    id="submit-button"
+    matSuffix
+    mat-icon-button
+    matTooltip="Add new patient."
+    (click)="createNewPatient = true"
+  >
+    Add
+    <mat-icon>add_circle</mat-icon>
+  </button>
+</div>
+<cdk-virtual-scroll-viewport
+  appendOnly
+  itemSize="10"
+  class="example-viewport custom-scroll-bar"
+>
+  <mat-card>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+      class="mat-elevation-z8"
+      id="dataSource"
+    >
+      <ng-container matColumnDef="Username">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="username"
+          sortActionDescription="Sort by username"
+        >
+          Username
+        </th>
+        <td mat-cell *matCellDef="let element" name="username">
+          {{ element.username }}
+        </td>
+      </ng-container>
+
+      <!-- FirstName Column -->
+      <ng-container matColumnDef="FirstName">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="firstName"
+          sortActionDescription="Sort by firstName"
+        >
+          FirstName
+        </th>
+        <td mat-cell *matCellDef="let element" name="firstName">
+          {{ element.firstName }}
+        </td>
+      </ng-container>
+
+      <!-- Surname Column -->
+      <ng-container matColumnDef="LastName">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="lastName"
+          sortActionDescription="Sort by lastName"
+        >
+          LastName
+        </th>
+        <td mat-cell *matCellDef="let element" name="lastName">
+          {{ element.lastName }}
+        </td>
+      </ng-container>
+
+      <!-- Age Column -->
+      <ng-container matColumnDef="Age">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="age"
+          sortActionDescription="Sort by age"
+        >
+          Age
+        </th>
+        <td mat-cell *matCellDef="let element" name="age">
+          {{ element.age }}
+        </td>
+      </ng-container>
+
+      <!-- Gender Column -->
+      <ng-container matColumnDef="Gender">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="gender"
+          sortActionDescription="Sort by gender"
+        >
+          Gender
+        </th>
+        <td mat-cell name="gender" *matCellDef="let element">
+          {{ element.gender }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="EditPatient">
+        <th mat-header-cell *matHeaderCellDef>Edit</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            name="edit-ordered-item"
+            (click)="editPatient(element.username)"
+            matTooltip="Edit patient details."
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Delete">
+        <th mat-header-cell *matHeaderCellDef>Delete</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            name="edit-ordered-item"
+            (click)="deletePatient(element.username)"
+            matTooltip="Delete patient"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card>
+</cdk-virtual-scroll-viewport>
+<app-new-patient
+  *ngIf="this.createNewPatient"
+  (closeNewPatient)="this.newPatientAdded($event)"
+></app-new-patient>

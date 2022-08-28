@@ -25,7 +25,7 @@ public class IllnessController {
         try {
             return new ResponseEntity<>(illnessService.getAll(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error in getAllPatients", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error in getAllIllnesses", HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -37,6 +37,7 @@ export class ViewPatientsComponent implements OnInit {
     'Gender',
     'ViewChart',
     'NewAppointment',
+    'EditPatient'
   ];
 
   constructor(

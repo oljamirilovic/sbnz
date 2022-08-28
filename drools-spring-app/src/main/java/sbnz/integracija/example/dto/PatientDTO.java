@@ -14,6 +14,9 @@ public class PatientDTO {
     public String lastName;
     public int age;
     public String gender;
+    public double bmd;
+    public String pa;
+    public boolean deleted;
 
     public PatientDTO(Patient p){
         this.username = p.getUsername();
@@ -21,5 +24,8 @@ public class PatientDTO {
         this.lastName = p.getLastName();
         this.age = p.getAge();
         this.gender = p.getGender().name();
+        this.bmd = p.getBmd();
+        this.pa = p.getPhysicalActivity().name();
+        this.deleted = p.isDeleted();
     }
 }
